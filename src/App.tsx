@@ -1,5 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { Smile, Frown, Meh, Heart, BookOpen, BookOpenCheck } from 'lucide-react';
+
+// Define the type for story keys
+type StoryKey = keyof typeof stories;
 
 // Multiple stories with emotion markers
 const stories = {
@@ -36,7 +39,7 @@ const stories = {
 };
 
 function App() {
-  const [currentStory, setCurrentStory] = useState('friendship');
+  const [currentStory, setCurrentStory] = useState<StoryKey>('friendship');
   const [currentPage, setCurrentPage] = useState(0);
   const [isPlaying, setIsPlaying] = useState(false);
   const [showStorySelector, setShowStorySelector] = useState(false);
@@ -73,7 +76,7 @@ function App() {
     setIsPlaying(false);
   };
 
-  const handleStorySelect = (storyKey: string) => {
+  const handleStorySelect = (storyKey: StoryKey) => {
     setCurrentStory(storyKey);
     setCurrentPage(0);
     setIsPlaying(false);
@@ -103,7 +106,7 @@ function App() {
               {Object.entries(stories).map(([key, story]) => (
                 <button
                   key={key}
-                  onClick={() => handleStorySelect(key)}
+                  onClick={() => handleStorySelect(key as StoryKey)}
                   className={`p-4 text-left rounded-lg transition-colors ${
                     currentStory === key
                       ? 'bg-purple-100 border-2 border-purple-500'
@@ -159,12 +162,12 @@ function App() {
         <div className="bg-white rounded-2xl shadow-xl p-8">
           <h2 className="text-xl font-semibold mb-4 text-purple-600">À propos du projet</h2>
           <p className="text-gray-700 mb-4">
-            Cette interface simule le comportement du QT Robot lors de la narration d'histoires. 
-            Le robot affiche différentes expressions faciales en fonction du contexte de l'histoire, 
+            Cette interface simule le comportement du QT Robot lors de la narration d'histoires.
+            Le robot affiche différentes expressions faciales en fonction du contexte de l'histoire,
             créant ainsi une expérience interactive et engageante pour les enfants de 3-4 ans.
           </p>
           <p className="text-gray-700">
-            Dans la version finale sur le robot physique, l'interface utilisera la synthèse vocale 
+            Dans la version finale sur le robot physique, l'interface utilisera la synthèse vocale
             et pourra éventuellement analyser les réactions de l'enfant pour adapter la narration.
           </p>
         </div>
