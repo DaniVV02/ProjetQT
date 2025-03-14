@@ -58,6 +58,12 @@ function App() {
     return () => clearInterval(timer);
   }, [isPlaying, currentStory]);
 
+  useEffect(() => {
+    if (isPlaying) {
+      speakText(stories[currentStory].pages[currentPage].text);
+    }
+  }, [currentPage, isPlaying, currentStory]);
+
   const getEmotionIcon = (emotion: string) => {
     switch (emotion) {
       case 'happy':
@@ -69,6 +75,12 @@ function App() {
       default:
         return <Meh className="w-32 h-32" />;
     }
+  };
+
+  const speakText = (text: string) => {
+    const utterance = new SpeechSynthesisUtterance(text);
+    utterance.lang = 'fr-FR'; // Set the language to French
+    window.speechSynthesis.speak(utterance);
   };
 
   const handleReset = () => {
