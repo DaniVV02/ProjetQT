@@ -4,6 +4,9 @@ import { Smile, Frown, Meh, Heart, BookOpen, BookOpenCheck } from 'lucide-react'
 // Define the type for story keys
 type StoryKey = keyof typeof stories;
 
+// Define the type for emotions
+type Emotion = 'happy' | 'sad' | 'love';
+
 // Multiple stories with emotion markers
 const stories = {
   friendship: {
@@ -13,6 +16,8 @@ const stories = {
       { text: "Aujourd'hui, je vais te raconter une belle histoire.", emotion: "excited" },
       { text: "Il était une fois un petit robot très curieux...", emotion: "neutral" },
       { text: "Un jour, il rencontra un enfant qui était tout triste.", emotion: "sad" },
+      { text: "Comment te sens-tu aujourd'hui?", emotion: "asking" },
+      { text: "", emotion: "response" }, // Placeholder for the response
       { text: "Ensemble, ils devinrent les meilleurs amis du monde!", emotion: "love" },
     ]
   },
@@ -23,6 +28,8 @@ const stories = {
       { text: "Je décide d'aller explorer le parc.", emotion: "excited" },
       { text: "Oh! J'aperçois quelque chose dans les buissons...", emotion: "neutral" },
       { text: "C'est un petit oiseau blessé.", emotion: "sad" },
+      { text: "Comment te sens-tu aujourd'hui?", emotion: "asking" },
+      { text: "", emotion: "response" }, // Placeholder for the response
       { text: "Je l'aide à retrouver son nid, quelle belle aventure!", emotion: "love" },
     ]
   },
@@ -33,6 +40,8 @@ const stories = {
       { text: "Dans mon jardin, je vois une petite graine.", emotion: "neutral" },
       { text: "Je la plante et j'attends...", emotion: "neutral" },
       { text: "Les jours passent, rien ne pousse...", emotion: "sad" },
+      { text: "Comment te sens-tu aujourd'hui?", emotion: "asking" },
+      { text: "", emotion: "response" }, // Placeholder for the response
       { text: "Oh! Une belle fleur apparaît enfin!", emotion: "happy" },
     ]
   }
@@ -43,20 +52,28 @@ function App() {
   const [currentPage, setCurrentPage] = useState(0);
   const [isPlaying, setIsPlaying] = useState(false);
   const [showStorySelector, setShowStorySelector] = useState(false);
+  const [waitingForResponse, setWaitingForResponse] = useState(false);
 
   useEffect(() => {
     let timer: number;
-    if (isPlaying) {
+    if (isPlaying && !waitingForResponse) {
       timer = window.setInterval(() => {
         setCurrentPage((prev) => {
-          if (prev < stories[currentStory].pages.length - 1) return prev + 1;
+          if (prev < stories[currentStory].pages.length - 1) {
+            const nextPage = prev + 1;
+            if (stories[currentStory].pages[nextPage].emotion === 'asking') {
+              setWaitingForResponse(true);
+              setIsPlaying(false);
+            }
+            return nextPage;
+          }
           setIsPlaying(false);
           return prev;
         });
       }, 3000);
     }
     return () => clearInterval(timer);
-  }, [isPlaying, currentStory]);
+  }, [isPlaying, currentStory, waitingForResponse]);
 
   useEffect(() => {
     if (isPlaying) {
@@ -72,6 +89,8 @@ function App() {
         return <Frown className="w-32 h-32" />;
       case 'love':
         return <Heart className="w-32 h-32" />;
+      case 'asking':
+        return <Meh className="w-32 h-32" />;
       default:
         return <Meh className="w-32 h-32" />;
     }
@@ -86,6 +105,7 @@ function App() {
   const handleReset = () => {
     setCurrentPage(0);
     setIsPlaying(false);
+    setWaitingForResponse(false);
   };
 
   const handleStorySelect = (storyKey: StoryKey) => {
@@ -93,6 +113,23 @@ function App() {
     setCurrentPage(0);
     setIsPlaying(false);
     setShowStorySelector(false);
+    setWaitingForResponse(false);
+  };
+
+  const handleEmojiClick = (emotion: Emotion) => {
+    const responseTexts: Record<Emotion, string> = {
+      happy: "Je suis content que tu sois heureux!",
+      sad: "Ne sois pas triste, je suis là pour toi!",
+      love: "Moi aussi, je t'aime beaucoup!",
+    };
+
+    const responseText = responseTexts[emotion];
+    const updatedStory = { ...stories[currentStory] };
+    updatedStory.pages[currentPage + 1].text = responseText;
+
+    setWaitingForResponse(false);
+    setCurrentPage((prev) => prev + 1);
+    setIsPlaying(true);
   };
 
   return (
@@ -141,6 +178,20 @@ function App() {
             </div>
           </div>
 
+          {waitingForResponse && (
+            <div className="flex justify-center gap-4 mb-8">
+              <button onClick={() => handleEmojiClick('happy')} className="p-4 rounded-full bg-yellow-200">
+                <Smile className="w-8 h-8" />
+              </button>
+              <button onClick={() => handleEmojiClick('sad')} className="p-4 rounded-full bg-blue-200">
+                <Frown className="w-8 h-8" />
+              </button>
+              <button onClick={() => handleEmojiClick('love')} className="p-4 rounded-full bg-red-200">
+                <Heart className="w-8 h-8" />
+              </button>
+            </div>
+          )}
+
           <div className="flex justify-center gap-4">
             <button
               onClick={() => setCurrentPage(Math.max(0, currentPage - 1))}
@@ -158,7 +209,7 @@ function App() {
             <button
               onClick={() => setCurrentPage(Math.min(stories[currentStory].pages.length - 1, currentPage + 1))}
               className="px-4 py-2 bg-purple-500 text-white rounded-lg hover:bg-purple-600 disabled:opacity-50"
-              disabled={currentPage === stories[currentStory].pages.length - 1}
+              disabled={currentPage === stories[currentStory].pages.length - 1 || waitingForResponse}
             >
               Suivant
             </button>
