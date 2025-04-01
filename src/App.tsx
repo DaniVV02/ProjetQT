@@ -295,7 +295,7 @@ function App() {
   
     const imageSrc = imageMap[emotion] || '/emotions/default.png';
   
-    return <img src={imageSrc} alt={emotion} className="w-32 h-32 object-contain" />;
+    return <img src={imageSrc} alt={emotion} className="w-44 h-44 object-contain z-0" />;
   };
   
 
@@ -373,9 +373,17 @@ function App() {
           )}
 
           <div className="flex flex-col items-center mb-8">
-            <div className="bg-gray-100 rounded-full p-8 mb-6">
+          <div className="relative w-60 h-60 mb-6">
+            <img
+              src="/emotions/teteQT.png" // image de fond circulaire ou décorative
+              alt="cadre"
+              className="absolute inset-0 w-full h-full object-contain z-10"
+            />
+            <div className="absolute inset-0 flex items-center justify-center mt-6">
               {getEmotionIcon(stories[currentStory].pages[currentPage].emotion)}
             </div>
+          </div>
+
             <div className="text-xl text-center font-medium text-gray-700 min-h-[4rem]">
               {stories[currentStory].pages[currentPage].text}
             </div>
