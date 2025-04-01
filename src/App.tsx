@@ -152,19 +152,21 @@ function App() {
   }, [currentPage, isPlaying, currentStory]);
 
   const getEmotionIcon = (emotion: string) => {
-    switch (emotion) {
-      case 'happy':
-        return <Smile className="w-32 h-32" />;
-      case 'sad':
-        return <Frown className="w-32 h-32" />;
-      case 'love':
-        return <Heart className="w-32 h-32" />;
-      case 'asking':
-        return <Meh className="w-32 h-32" />;
-      default:
-        return <Meh className="w-32 h-32" />;
-    }
+    const imageMap: Record<string, string> = {
+      happy: '/emotions/happy.png',
+      sad: '/emotions/sad.png',
+      asking: '/emotions/confus.png',
+      neutral: '/emotions/neutral.png',
+      surprised: '/emotions/surprised.png',
+      excited: '/emotions/excited.png',
+      love: '/emotions/love.png',
+    };
+  
+    const imageSrc = imageMap[emotion] || '/emotions/default.png';
+  
+    return <img src={imageSrc} alt={emotion} className="w-32 h-32 object-contain" />;
   };
+  
 
   const speakText = (text: string) => {
     const utterance = new SpeechSynthesisUtterance(text);
