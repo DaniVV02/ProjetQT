@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Smile, Frown, Meh, Heart, BookOpen, BookOpenCheck } from 'lucide-react';
 
 // Define the type for story keys
@@ -14,7 +14,7 @@ const stories = {
     pages: [
       { text: "Il était une fois un loup qui vivait dans une belle forêt, entouré de tous ses amis. Il s'appelait Loup.", emotion: "happy" },
       { text: "Mais ce loup avait un souci : il était trop émotif. Joyeux, fâché, triste, excité… il changeait d'humeur à cent à l'heure !", emotion: "excited" },
-      { text: "Ainsi,uand Loup était d'humeur joyeuse, il sifflotait, le cœur léger, faisait des blagues, parlait aux arbres… Il était plein d'énergie et débordait d'idées pour s'amuser !", emotion: "happy" },
+      { text: "Ainsi, quand Loup était d'humeur joyeuse, il sifflotait, le cœur léger, faisait des blagues, parlait aux arbres… Il était plein d'énergie et débordait d'idées pour s'amuser !", emotion: "happy" },
       { text: "Cependant, si quelque chose le contrariait… Ah ! Il se renfrognait, explosait, et envoyait tout le monde balader !", emotion: "sad" },
       { text: "— Tu dois apprendre à te calmer, Loup, lui dit un jour Maître Hibou, excédé. Tu nous donnes le tournis !", emotion: "sad" },
       { text: "— Apprendre à me calmer ? Mais pourquoi ? demanda Loup.", emotion: "neutral" },
@@ -123,11 +123,15 @@ function App() {
   const [isPlaying, setIsPlaying] = useState(false);
   const [showStorySelector, setShowStorySelector] = useState(false);
   const [waitingForResponse, setWaitingForResponse] = useState(false);
+  const [language, setLanguage] = useState<'french' | 'english'>('french');
+  const utteranceRef = useRef<SpeechSynthesisUtterance | null>(null);
 
   useEffect(() => {
-    let timer: number;
     if (isPlaying && !waitingForResponse) {
-      timer = window.setInterval(() => {
+      const text = stories[currentStory].pages[currentPage].text;
+      utteranceRef.current = new SpeechSynthesisUtterance(text);
+      utteranceRef.current.lang = language === 'french' ? 'fr-FR' : 'en-US';
+      utteranceRef.current.onend = () => {
         setCurrentPage((prev) => {
           if (prev < stories[currentStory].pages.length - 1) {
             const nextPage = prev + 1;
@@ -140,16 +144,10 @@ function App() {
           setIsPlaying(false);
           return prev;
         });
-      }, 3000);
+      };
+      window.speechSynthesis.speak(utteranceRef.current);
     }
-    return () => clearInterval(timer);
-  }, [isPlaying, currentStory, waitingForResponse]);
-
-  useEffect(() => {
-    if (isPlaying) {
-      speakText(stories[currentStory].pages[currentPage].text);
-    }
-  }, [currentPage, isPlaying, currentStory]);
+  }, [isPlaying, currentStory, currentPage, waitingForResponse, language]);
 
   const getEmotionIcon = (emotion: string) => {
     const imageMap: Record<string, string> = {
@@ -161,23 +159,19 @@ function App() {
       excited: '/emotions/excited.png',
       love: '/emotions/love.png',
     };
-  
-    const imageSrc = imageMap[emotion] || '/emotions/default.png';
-  
-    return <img src={imageSrc} alt={emotion} className="w-32 h-32 object-contain" />;
-  };
-  
 
-  const speakText = (text: string) => {
-    const utterance = new SpeechSynthesisUtterance(text);
-    utterance.lang = 'fr-FR'; // Set the language to French
-    window.speechSynthesis.speak(utterance);
+    const imageSrc = imageMap[emotion] || '/emotions/default.png';
+
+    return <img src={imageSrc} alt={emotion} className="w-32 h-32 object-contain" />;
   };
 
   const handleReset = () => {
     setCurrentPage(0);
     setIsPlaying(false);
     setWaitingForResponse(false);
+    if (utteranceRef.current) {
+      window.speechSynthesis.cancel();
+    }
   };
 
   const handleStorySelect = (storyKey: StoryKey) => {
@@ -186,6 +180,20 @@ function App() {
     setIsPlaying(false);
     setShowStorySelector(false);
     setWaitingForResponse(false);
+    if (utteranceRef.current) {
+      window.speechSynthesis.cancel();
+    }
+  };
+
+  const handleLanguageChange = (lang: 'french' | 'english') => {
+    setLanguage(lang);
+    setCurrentStory(lang);
+    setCurrentPage(0);
+    setIsPlaying(false);
+    setWaitingForResponse(false);
+    if (utteranceRef.current) {
+      window.speechSynthesis.cancel();
+    }
   };
 
   const handleEmojiClick = (emotion: Emotion) => {
@@ -204,6 +212,22 @@ function App() {
     setIsPlaying(true);
   };
 
+  const handleNextPage = () => {
+    if (utteranceRef.current) {
+      window.speechSynthesis.cancel();
+    }
+    setCurrentPage((prev) => Math.min(prev + 1, stories[currentStory].pages.length - 1));
+    setIsPlaying(true);
+  };
+
+  const handlePreviousPage = () => {
+    if (utteranceRef.current) {
+      window.speechSynthesis.cancel();
+    }
+    setCurrentPage((prev) => Math.max(prev - 1, 0));
+    setIsPlaying(true);
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-b from-blue-100 to-purple-100 p-8">
       <div className="max-w-2xl mx-auto">
@@ -213,13 +237,23 @@ function App() {
               <BookOpen className="w-8 h-8" />
               QT Robot Storyteller
             </h1>
-            <button
-              onClick={() => setShowStorySelector(!showStorySelector)}
-              className="flex items-center gap-2 px-4 py-2 bg-purple-500 text-white rounded-lg hover:bg-purple-600"
-            >
-              <BookOpenCheck className="w-5 h-5" />
-              Choisir une histoire
-            </button>
+            <div className="flex gap-4">
+              <button
+                onClick={() => setShowStorySelector(!showStorySelector)}
+                className="flex items-center gap-2 px-4 py-2 bg-purple-500 text-white rounded-lg hover:bg-purple-600"
+              >
+                <BookOpenCheck className="w-5 h-5" />
+                Choisir une histoire
+              </button>
+              <select
+                value={language}
+                onChange={(e) => handleLanguageChange(e.target.value as 'french' | 'english')}
+                className="px-4 py-2 bg-gray-200 text-gray-800 rounded-lg"
+              >
+                <option value="french">Français</option>
+                <option value="english">English</option>
+              </select>
+            </div>
           </div>
 
           {showStorySelector && (
@@ -266,7 +300,7 @@ function App() {
 
           <div className="flex justify-center gap-4">
             <button
-              onClick={() => setCurrentPage(Math.max(0, currentPage - 1))}
+              onClick={handlePreviousPage}
               className="px-4 py-2 bg-purple-500 text-white rounded-lg hover:bg-purple-600 disabled:opacity-50"
               disabled={currentPage === 0}
             >
@@ -279,7 +313,7 @@ function App() {
               {isPlaying ? 'Pause' : 'Lecture'}
             </button>
             <button
-              onClick={() => setCurrentPage(Math.min(stories[currentStory].pages.length - 1, currentPage + 1))}
+              onClick={handleNextPage}
               className="px-4 py-2 bg-purple-500 text-white rounded-lg hover:bg-purple-600 disabled:opacity-50"
               disabled={currentPage === stories[currentStory].pages.length - 1 || waitingForResponse}
             >
