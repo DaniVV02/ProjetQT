@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
-import { Smile, Frown, Meh, Heart, BookOpen, BookOpenCheck } from 'lucide-react';
+import { Smile, Angry, Frown, Meh, Heart, BookOpen, BookOpenCheck } from 'lucide-react';
 
 // Define the type for story keys
 type StoryKey = keyof typeof stories['french'];
@@ -7,7 +7,7 @@ type Language = 'french' | 'english';
 
 
 // Define the type for emotions
-type Emotion = 'happy' | 'sad' | 'love';
+type Emotion = 'happy' | 'sad' | 'love' | 'angry' | 'excited' | 'neutral' | 'surprised' | 'shy';
 
 // Multiple stories with emotion markers
 const stories = {
@@ -431,6 +431,8 @@ function App() {
       surprised: '/emotions/surprised.png',
       excited: '/emotions/excited.png',
       love: '/emotions/love.png',
+      shy: '/emotions/shy.png',
+      angry: '/emotions/angry.png',
     };
 
     const imageSrc = imageMap[emotion] || '/emotions/default.png';
@@ -473,7 +475,11 @@ function App() {
     const responseTexts: Record<Emotion, string> = {
       happy: "Je suis content que tu sois heureux!",
       sad: "Ne sois pas triste, je suis là pour toi!",
+      angry: "Calme-toi, tout ira bien!",
       love: "Moi aussi, je t'aime beaucoup!",
+      surprised: "Oh, vraiment? C'est incroyable!",
+      shy: "Ne sois pas timide, je suis là avec toi!",      excited: "Super! J'adore ton enthousiasme!",
+      neutral: "D'accord, je comprends.",
     };
 
     const responseText = responseTexts[emotion];
@@ -624,6 +630,21 @@ function App() {
               </button>
               <button onClick={() => handleEmojiClick('love')} className="p-4 rounded-full bg-red-200">
                 <Heart className="w-8 h-8" />
+              </button>
+              <button onClick={() => handleEmojiClick('angry')} className="p-4 rounded-full bg-orange-200">
+                <Angry className="w-8 h-8" />
+              </button>
+              <button onClick={() => handleEmojiClick('surprised')} className="p-4 rounded-full bg-purple-200">
+                <Meh className="w-8 h-8" />
+              </button>
+              <button onClick={() => handleEmojiClick('excited')} className="p-4 rounded-full bg-green-200">
+                <Smile className="w-8 h-8" />
+              </button>
+              <button onClick={() => handleEmojiClick('shy')} className="p-4 rounded-full bg-pink-200">
+                <Smile className="w-8 h-8" />
+              </button>
+              <button onClick={() => handleEmojiClick('neutral')} className="p-4 rounded-full bg-gray-200">
+                <Smile className="w-8 h-8" />
               </button>
             </div>
           )}
