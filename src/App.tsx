@@ -2,7 +2,9 @@ import { useState, useEffect, useRef } from 'react';
 import { Smile, Frown, Meh, Heart, BookOpen, BookOpenCheck } from 'lucide-react';
 
 // Define the type for story keys
-type StoryKey = keyof typeof stories;
+type StoryKey = keyof typeof stories['french'];
+type Language = 'french' | 'english';
+
 
 // Define the type for emotions
 type Emotion = 'happy' | 'sad' | 'love';
@@ -10,58 +12,59 @@ type Emotion = 'happy' | 'sad' | 'love';
 // Multiple stories with emotion markers
 const stories = {
   french: {
-    title: "Le Loup Émotif",
-    pages: [
-      { text: "Il était une fois un loup qui vivait dans une belle forêt, entouré de tous ses amis. Il s'appelait Loup.", emotion: "happy" },
-      { text: "Mais ce loup avait un souci : il était trop émotif. Joyeux, fâché, triste, excité… il changeait d'humeur à cent à l'heure !", emotion: "excited" },
-      { text: "Ainsi, quand Loup était d'humeur joyeuse, il sifflotait, le cœur léger, faisait des blagues, parlait aux arbres… Il était plein d'énergie et débordait d'idées pour s'amuser !", emotion: "happy" },
-      { text: "Cependant, si quelque chose le contrariait… Ah ! Il se renfrognait, explosait, et envoyait tout le monde balader !", emotion: "sad" },
-      { text: "— Tu dois apprendre à te calmer, Loup, lui dit un jour Maître Hibou, excédé. Tu nous donnes le tournis !", emotion: "sad" },
-      { text: "— Apprendre à me calmer ? Mais pourquoi ? demanda Loup.", emotion: "neutral" },
-      { text: "— Pour être plus serein ! Mais ne t'inquiète pas, nous allons t'aider… On commence demain !", emotion: "happy" },
-      { text: "Comment te sens-tu quand tu es en colère ?", emotion: "asking" },
-      { text: "", emotion: "response" },
-      { text: "Le lendemain, Loup se rendit chez son ami.", emotion: "neutral" },
-      { text: "— Pour contrôler tes émotions, le yoga, c'est parfait ! déclara Maître Hibou. Respire calmement et fais le vide en toi.", emotion: "happy" },
-      { text: "Maître Hibou enchaîna les positions : lotus, montagne… et Loup essaya de l'imiter. Ouh là là ! Ce n'était pas facile, mais qu'est-ce que c'était rigolo ! N'y tenant plus, Loup éclata de rire.", emotion: "happy" },
-      { text: "— On dirait que le yoga ne fonctionne pas avec toi, soupira Maître Hibou.", emotion: "sad" },
-      { text: "À l'extérieur, Alfred attendait Loup de pied ferme.", emotion: "neutral" },
-      { text: "— Rien de tel que le sport pour se défouler, dit-il. Je t'ai préparé un parcours spécial 'Loup excité'. Prêt ?", emotion: "happy" },
-      { text: "Et il fila comme une fusée. Derrière lui, Loup courait, sautait, rampait…", emotion: "happy" },
-      { text: "Alfred s'arrêta au pied d'un arbre immense.", emotion: "neutral" },
-      { text: "— On se retrouve en haut ! cria-t-il en disparaissant dans les feuillages.", emotion: "excited" },
-      { text: "Arrivé au sommet, Loup regarda en bas… Sa gorge se serra, son cœur se mit à cogner dans sa poitrine, ses jambes à trembler.", emotion: "sad" },
-      { text: "— Alfred, j'ai peur ! paniqua-t-il. Je vais tomber !", emotion: "sad" },
-      { text: "Comment te sens-tu quand tu as peur ?", emotion: "asking" },
-      { text: "", emotion: "response" },
-      { text: "— Calme-toi, Loup, je suis avec toi. On va redescendre ensemble, doucement.", emotion: "neutral" },
-      { text: "Loup prit une grande inspiration et, tout tremblant, il redescendit.", emotion: "neutral" },
-      { text: "— Tu as vaincu ta peur, tu peux être fier de toi ! le félicita Alfred.", emotion: "happy" },
-      { text: "Loup sourit : ah ça oui, il était fier de lui !", emotion: "happy" },
-      { text: "Tout ceci m'a mis en appétit, se dit Loup. Cela tombait bien : Gros Louis l'attendait chez lui.", emotion: "happy" },
-      { text: "Les pattes pleines de farine, Gros Louis était avec Louve dans la cuisine.", emotion: "neutral" },
-      { text: "— Ils ont l'air de bien s'amuser tous les deux…, pensa Loup, jaloux.", emotion: "sad" },
-      { text: "— Salut Loup ! fit Gros Louis. Aujourd'hui, on prépare des macarons. Pour réussir ces gâteaux, il faut être très, très patient. Tiens, c'est un bon exercice pour toi, n'est-ce pas ?", emotion: "happy" },
-      { text: "À ces mots, Louve éclata de rire.", emotion: "happy" },
-      { text: "Loup sentit la moutarde lui monter au nez. Il devint tout rouge, tapa du pied et explosa :", emotion: "sad" },
-      { text: "— C'est ça, moquez-vous de moi ! hurla-t-il, très en colère. Je m'en fiche ! De toute façon, je n'ai pas envie de faire des gâteaux idiots avec des idiots !", emotion: "sad" },
-      { text: "Loup s'en alla, grommelant dans sa barbe et donnant des coups de patte dans les arbres.", emotion: "sad" },
-      { text: "Peu à peu, Loup ralentit son allure, pour finir par se traîner comme un escargot, le cœur lourd. Une larme roula sur sa joue.", emotion: "sad" },
-      { text: "— Je n'aurais pas dû m'énerver, renifla-t-il. Louve ne m'aimera plus jamais… Comme je suis triste…", emotion: "sad" },
-      { text: "Comment te sens-tu quand tu es triste ?", emotion: "asking" },
-      { text: "", emotion: "response" },
-      { text: "— Mais, qu'est-ce qui arrive à mon super copain ? fit alors une voix derrière lui.", emotion: "neutral" },
-      { text: "C'était Demoiselle Yéti. Elle lui fit un gros câlin, puis elle dit :", emotion: "love" },
-      { text: "— Ce qui est fait est fait. Maintenant, il faut réparer ta bêtise ! Va voir Gros Louis et Louve, et excuse-toi. Tu te sentiras beaucoup mieux après.", emotion: "happy" },
-      { text: "— Et si Louve ne veut pas me pardonner ? fit Loup, inquiet.", emotion: "sad" },
-      { text: "— Qui ne tente rien n'a rien, répondit Demoiselle Yéti. Allez, file !", emotion: "happy" },
-      { text: "Tout honteux, Loup retourna frapper à la porte de Gros Louis.", emotion: "sad" },
-      { text: "— Je vous demande pardon, les amis, fit-il. Je ne pensais pas ce que j'ai dit. Ce n'était pas gentil.", emotion: "sad" },
-      { text: "— Excuses acceptées, sourit Louve.", emotion: "happy" },
-      { text: "Loup et Louve se regardèrent, des cœurs plein les yeux. Loup leva ses pattes : il se sentait léger, léger, léger ! Et… il était affamé !", emotion: "love" },
-      { text: "À table, mes amis, les macarons sont prêts !", emotion: "happy" }
-    ]
-  },
+    wolf : {
+      title: "Le Loup Émotif",
+      pages: [
+        { text: "Il était une fois un loup qui vivait dans une belle forêt, entouré de tous ses amis. Il s'appelait Loup.", emotion: "happy" },
+        { text: "Mais ce loup avait un souci : il était trop émotif. Joyeux, fâché, triste, excité… il changeait d'humeur à cent à l'heure !", emotion: "excited" },
+        { text: "Ainsi, quand Loup était d'humeur joyeuse, il sifflotait, le cœur léger, faisait des blagues, parlait aux arbres… Il était plein d'énergie et débordait d'idées pour s'amuser !", emotion: "happy" },
+        { text: "Cependant, si quelque chose le contrariait… Ah ! Il se renfrognait, explosait, et envoyait tout le monde balader !", emotion: "sad" },
+        { text: "— Tu dois apprendre à te calmer, Loup, lui dit un jour Maître Hibou, excédé. Tu nous donnes le tournis !", emotion: "sad" },
+        { text: "— Apprendre à me calmer ? Mais pourquoi ? demanda Loup.", emotion: "neutral" },
+        { text: "— Pour être plus serein ! Mais ne t'inquiète pas, nous allons t'aider… On commence demain !", emotion: "happy" },
+        { text: "Comment te sens-tu quand tu es en colère ?", emotion: "asking" },
+        { text: "", emotion: "response" },
+        { text: "Le lendemain, Loup se rendit chez son ami.", emotion: "neutral" },
+        { text: "— Pour contrôler tes émotions, le yoga, c'est parfait ! déclara Maître Hibou. Respire calmement et fais le vide en toi.", emotion: "happy" },
+        { text: "Maître Hibou enchaîna les positions : lotus, montagne… et Loup essaya de l'imiter. Ouh là là ! Ce n'était pas facile, mais qu'est-ce que c'était rigolo ! N'y tenant plus, Loup éclata de rire.", emotion: "happy" },
+        { text: "— On dirait que le yoga ne fonctionne pas avec toi, soupira Maître Hibou.", emotion: "sad" },
+        { text: "À l'extérieur, Alfred attendait Loup de pied ferme.", emotion: "neutral" },
+        { text: "— Rien de tel que le sport pour se défouler, dit-il. Je t'ai préparé un parcours spécial 'Loup excité'. Prêt ?", emotion: "happy" },
+        { text: "Et il fila comme une fusée. Derrière lui, Loup courait, sautait, rampait…", emotion: "happy" },
+        { text: "Alfred s'arrêta au pied d'un arbre immense.", emotion: "neutral" },
+        { text: "— On se retrouve en haut ! cria-t-il en disparaissant dans les feuillages.", emotion: "excited" },
+        { text: "Arrivé au sommet, Loup regarda en bas… Sa gorge se serra, son cœur se mit à cogner dans sa poitrine, ses jambes à trembler.", emotion: "sad" },
+        { text: "— Alfred, j'ai peur ! paniqua-t-il. Je vais tomber !", emotion: "sad" },
+        { text: "Comment te sens-tu quand tu as peur ?", emotion: "asking" },
+        { text: "", emotion: "response" },
+        { text: "— Calme-toi, Loup, je suis avec toi. On va redescendre ensemble, doucement.", emotion: "neutral" },
+        { text: "Loup prit une grande inspiration et, tout tremblant, il redescendit.", emotion: "neutral" },
+        { text: "— Tu as vaincu ta peur, tu peux être fier de toi ! le félicita Alfred.", emotion: "happy" },
+        { text: "Loup sourit : ah ça oui, il était fier de lui !", emotion: "happy" },
+        { text: "Tout ceci m'a mis en appétit, se dit Loup. Cela tombait bien : Gros Louis l'attendait chez lui.", emotion: "happy" },
+        { text: "Les pattes pleines de farine, Gros Louis était avec Louve dans la cuisine.", emotion: "neutral" },
+        { text: "— Ils ont l'air de bien s'amuser tous les deux…, pensa Loup, jaloux.", emotion: "sad" },
+        { text: "— Salut Loup ! fit Gros Louis. Aujourd'hui, on prépare des macarons. Pour réussir ces gâteaux, il faut être très, très patient. Tiens, c'est un bon exercice pour toi, n'est-ce pas ?", emotion: "happy" },
+        { text: "À ces mots, Louve éclata de rire.", emotion: "happy" },
+        { text: "Loup sentit la moutarde lui monter au nez. Il devint tout rouge, tapa du pied et explosa :", emotion: "sad" },
+        { text: "— C'est ça, moquez-vous de moi ! hurla-t-il, très en colère. Je m'en fiche ! De toute façon, je n'ai pas envie de faire des gâteaux idiots avec des idiots !", emotion: "sad" },
+        { text: "Loup s'en alla, grommelant dans sa barbe et donnant des coups de patte dans les arbres.", emotion: "sad" },
+        { text: "Peu à peu, Loup ralentit son allure, pour finir par se traîner comme un escargot, le cœur lourd. Une larme roula sur sa joue.", emotion: "sad" },
+        { text: "— Je n'aurais pas dû m'énerver, renifla-t-il. Louve ne m'aimera plus jamais… Comme je suis triste…", emotion: "sad" },
+        { text: "Comment te sens-tu quand tu es triste ?", emotion: "asking" },
+        { text: "", emotion: "response" },
+        { text: "— Mais, qu'est-ce qui arrive à mon super copain ? fit alors une voix derrière lui.", emotion: "neutral" },
+        { text: "C'était Demoiselle Yéti. Elle lui fit un gros câlin, puis elle dit :", emotion: "love" },
+        { text: "— Ce qui est fait est fait. Maintenant, il faut réparer ta bêtise ! Va voir Gros Louis et Louve, et excuse-toi. Tu te sentiras beaucoup mieux après.", emotion: "happy" },
+        { text: "— Et si Louve ne veut pas me pardonner ? fit Loup, inquiet.", emotion: "sad" },
+        { text: "— Qui ne tente rien n'a rien, répondit Demoiselle Yéti. Allez, file !", emotion: "happy" },
+        { text: "Tout honteux, Loup retourna frapper à la porte de Gros Louis.", emotion: "sad" },
+        { text: "— Je vous demande pardon, les amis, fit-il. Je ne pensais pas ce que j'ai dit. Ce n'était pas gentil.", emotion: "sad" },
+        { text: "— Excuses acceptées, sourit Louve.", emotion: "happy" },
+        { text: "Loup et Louve se regardèrent, des cœurs plein les yeux. Loup leva ses pattes : il se sentait léger, léger, léger ! Et… il était affamé !", emotion: "love" },
+        { text: "À table, mes amis, les macarons sont prêts !", emotion: "happy" }
+      ]
+    },
   cat: {
     title: "Le Chat Craintif",
     pages: [
@@ -193,7 +196,9 @@ const stories = {
       { text: "— La prochaine fois, je serai le premier à danser, pensa Téo avec un sourire. Et je serai moins timide !", emotion: "proud" }
     ]
   },
+},
   english: {
+  wolf: {
     title: "The Emotional Wolf",
     pages: [
       { text: "Once upon a time, there was a wolf who lived in a beautiful forest, surrounded by all his friends. His name was Wolf.", emotion: "happy" },
@@ -245,28 +250,164 @@ const stories = {
       { text: "Wolf and Lona looked at each other, hearts in their eyes. Wolf lifted his paws: he felt light, light, light! And... he was starving!", emotion: "love" },
       { text: "Let's eat now —the macarons are ready!", emotion: "happy" }
     ]
+  },
+  cat: {
+    title: "The Fearful Cat",
+    pages: [
+      { text: "Once upon a time, there was a little cat named Grizou who lived in a cozy house, surrounded by his friends. Grizou loved his quiet life.", emotion: "happy" },
+      { text: "But Grizou had a big problem: he was very fearful. He was afraid of everything! Noises, shadows, clouds... everything scared him.", emotion: "fear" },
+      { text: "When Grizou heard a strange noise, he hid under the couch and trembled with fear.", emotion: "fear" },
+      { text: "One day, Grizou saw a shadow pass near the window. He jumped and took refuge under the table, his heart pounding.", emotion: "fear" },
+      { text: "— Grizou, why are you afraid? asked his friend, the kind dog Max, as he approached.", emotion: "neutral" },
+      { text: "— I saw a shadow, I think it's a monster! replied Grizou, trembling.", emotion: "fear" },
+      { text: "— Oh, but it's nothing, it's just a tree moving in the wind! said Max, laughing.", emotion: "happy" },
+      { text: "— A tree? Really? asked Grizou, uncertain.", emotion: "neutral" },
+      { text: "— Yes! And to show you there's nothing to fear, come with me, let's explore!", emotion: "excited" },
+      { text: "Grizou followed Max outside, curling up into himself. But the more he walked, the more nervous he felt.", emotion: "fear" },
+      { text: "— Look, Grizou, it's just a branch moving in the wind, explained Max, pointing to a tree.", emotion: "happy" },
+      { text: "Grizou looked closely. Indeed, it was just a branch swaying gently. But he still wasn't reassured.", emotion: "neutral" },
+      { text: "— What if it was a monster disguised as a branch? whispered Grizou.", emotion: "fear" },
+      { text: "Max smiled and said: — Grizou, there are no monsters. Sometimes our fears grow in our minds, but they're not real.", emotion: "happy" },
+      { text: "Max then suggested a little walk in the forest to help Grizou relax.", emotion: "happy" },
+      { text: "— If you feel scared, I’ll be there for you, said Max, reassuring him.", emotion: "love" },
+      { text: "Grizou, though nervous, agreed to follow his friend. They walked quietly, and at every sound, Grizou tensed up, but Max reminded him everything was fine.", emotion: "neutral" },
+      { text: "Suddenly, a little cry pierced the air. Grizou jumped and hid behind a tree.", emotion: "fear" },
+      { text: "— Don’t worry, it’s just a bird, said Max, smiling.", emotion: "happy" },
+      { text: "Grizou peeked and indeed saw a little bird singing joyfully on a branch.", emotion: "happy" },
+      { text: "— You see, there’s nothing to be afraid of, added Max.", emotion: "happy" },
+      { text: "Grizou, still nervous, felt a bit more secure. He followed Max further, his paws trembling less.", emotion: "neutral" },
+      { text: "— Max, thank you for helping me face my fears, said Grizou, touched.", emotion: "love" },
+      { text: "— It’s normal, Grizou! Friends are here to support each other! replied Max.", emotion: "happy" },
+      { text: "When they got home, Grizou felt more at peace. He had learned that there were no monsters and that sometimes, fears were just illusions.", emotion: "happy" },
+      { text: "That night, Grizou fell asleep peacefully, a smile on his face, happy to have faced his fears.", emotion: "happy" },
+      { text: "All’s well that ends well, thought Grizou as he closed his eyes, a feeling of peace filling his heart.", emotion: "happy" }
+    ]
+  },
+  bear: {
+    title: "Bouba, the Very Cute Bear",
+    pages: [
+      { text: "Once upon a time, in an enchanted forest, there was a little bear named Bouba. Bouba was soft, cute, with sparkling eyes and a smile that lit up the forest.", emotion: "happy" },
+      { text: "All the animals in the forest loved Bouba. He had a special way of jumping in circles when he was happy, and everyone laughed when he did his little twirls.", emotion: "happy" },
+      { text: "But there was one thing Bouba loved more than anything: giving hugs! He hugged his friends every day: the birds, the rabbits, and even the big trees!", emotion: "loving" },
+      { text: "One morning, Bouba woke up early and decided that this day would be special. He wanted to give a hug to every living being in the forest.", emotion: "excited" },
+      { text: "He started with old hedgehog Hector, who was still sleeping under a pile of leaves. Bouba gently approached and gave him a soft hug. — Hey! Oh, thank you Bouba, purred Hector with a smile.", emotion: "happy" },
+      { text: "Next, Bouba went to visit Léon the rabbit. He was busy eating carrots, but when he saw Bouba coming, he smiled and opened his arms. Bouba hugged him with his soft and warm little arms.", emotion: "happy" },
+      { text: "— Thank you Bouba, you’re truly the kindest of bears! said Léon, all joyful.", emotion: "happy" },
+      { text: "Bouba then went to see Gigi the giraffe. She had a long neck, but Bouba knew how to reach her: he jumped, and jumped again, until he could give her a gentle hug.", emotion: "happy" },
+      { text: "— Oh, Bouba! said Gigi, lowering her long neck. What a lovely surprise!", emotion: "happy" },
+      { text: "Bouba, very happy to spread joy, continued on his way. He went to hug everyone: squirrels, birds, trees, and even the little flowers rising under the sunlight.", emotion: "joyful" },
+      { text: "But after a while, Bouba realized he had hugged everyone, except one very important person: his mom.", emotion: "surprised" },
+      { text: "Bouba ran home to his mom, who was preparing berries for snack time. He jumped into her arms and hugged her tight.", emotion: "loving" },
+      { text: "— Mom, I love you so much! said Bouba, all happy.", emotion: "loving" },
+      { text: "His mom smiled tenderly and replied: — I love you too, my little Bouba. You are such a kind and caring little bear.", emotion: "love" },
+      { text: "Bouba felt all warm inside. He then understood that the best thing he could do was to share his love with those he cared about.", emotion: "happy" },
+      { text: "That night, after giving hugs to everyone, Bouba fell asleep peacefully, his heart full of happiness, surrounded by his mother’s love.", emotion: "happy" },
+      { text: "And as he closed his eyes, he said to himself: — Tomorrow, I’ll give even more hugs. Because the more we give, the more beautiful the world becomes.", emotion: "love" }
+    ]
+  },
+  rabbit: {
+    title: "The Curious Rabbit",
+    pages: [
+      { text: "Once upon a time, there was a little rabbit named Benjamin, who lived in a big green meadow, surrounded by flowers and his friends.", emotion: "happy" },
+      { text: "Benjamin was a very curious rabbit. He loved to explore, discover new places, and ask a thousand questions.", emotion: "curious" },
+      { text: "One morning, Benjamin noticed a small path winding through the trees. He had never seen this path before and decided to follow it.", emotion: "excited" },
+      { text: "— Where does this path lead? wondered Benjamin, all excited at the idea of a new adventure.", emotion: "curious" },
+      { text: "As he ventured further, he met an old turtle sitting under a tree.", emotion: "neutral" },
+      { text: "— Hello, turtle! said Benjamin. What are you doing here? I had never seen this path before.", emotion: "curious" },
+      { text: "— Oh, this path leads to a very special place, replied the turtle with a smile. It's a place where all the forest's secrets are hidden.", emotion: "mysterious" },
+      { text: "Benjamin, very excited, decided to follow the path to this mysterious place.", emotion: "excited" },
+      { text: "The path was lined with brightly colored flowers and butterflies fluttering in the air.", emotion: "happy" },
+      { text: "But the further he went, the more nervous he felt. The place became darker, and the trees seemed to get closer.", emotion: "nervous" },
+      { text: "— Maybe I should turn back, thought Benjamin, but he was too curious to go back.", emotion: "neutral" },
+      { text: "Suddenly, he saw a little light shining at the end of the path. He felt reassured and walked toward it.", emotion: "happy" },
+      { text: "Arriving at the light, Benjamin discovered a beautiful clearing full of glowing fireflies. It was a magical place he had never seen before.", emotion: "amazed" },
+      { text: "— Wow! This is incredible! exclaimed Benjamin. This is the most beautiful place I've ever seen!", emotion: "happy" },
+      { text: "He lay down in the soft grass and watched the fireflies dance around him. It was a moment of pure magic.", emotion: "peaceful" },
+      { text: "But suddenly, Benjamin remembered his family and friends. He couldn’t wait to tell them about his discovery.", emotion: "neutral" },
+      { text: "So, he got up and headed toward the clearing’s exit, feeling proud of his curiosity.", emotion: "proud" },
+      { text: "— I’ll tell them everything I saw! said Benjamin with excitement.", emotion: "happy" },
+      { text: "When he arrived home, his friends were eager to know where he had been.", emotion: "excited" },
+      { text: "— Benjamin, where were you? they exclaimed. We were looking for you everywhere!", emotion: "concerned" },
+      { text: "— I found a secret place, replied Benjamin with a smile. There’s a magical clearing with fireflies!", emotion: "happy" },
+      { text: "His friends were impressed and decided to go on an adventure with him to discover this wonderful place.", emotion: "excited" },
+      { text: "And so, Benjamin and his friends set off together, curious to discover more of the forest’s secrets.", emotion: "excited" },
+      { text: "Benjamin smiled, thinking that his curiosity had led him to a beautiful adventure, and he promised himself to never stop asking questions and discovering the world around him.", emotion: "happy" }
+    ]
+  },
+  raton: {
+    title: "The Mischievous Raccoon",
+    pages: [
+      { text: "Once upon a time, there was a little raccoon named Rolo. He lived in a lush forest, full of mysteries and secrets.", emotion: "happy" },
+      { text: "Rolo was a very mischievous raccoon. He loved to play pranks on his friends. If someone wasn’t paying attention, Rolo would seize the chance for a joke!", emotion: "mischievous" },
+      { text: "One day, he decided to play a trick on his friend, the deer Timothée. He knew that Timothée loved to eat sweet berries.", emotion: "mischievous" },
+      { text: "Rolo quietly sneaked over to Timothée’s berry stash and swapped a few for spicy berries he had found.", emotion: "sneaky" },
+      { text: "— Timothée is going to love this, thought Rolo, hiding behind a bush to watch the scene.", emotion: "excited" },
+      { text: "When Timothée came to taste his berries, he found them delicious at first. But after a few bites, he started making a face.", emotion: "surprised" },
+      { text: "— Ah, what is this?! shouted Timothée. These berries are spicy!", emotion: "shocked" },
+      { text: "Rolo burst out laughing from his bush. But he didn’t expect what would happen next.", emotion: "mischievous" },
+      { text: "Timothée, a bit surprised, turned around and saw Rolo laughing. — So it was you, little trickster!", emotion: "angry" },
+      { text: "Rolo felt a bit guilty, but he couldn’t help giggling. — Oh, Timothée, it was just for fun!", emotion: "mischievous" },
+      { text: "— Well, now you’re the one laughing! replied Timothée. Next time, I’ll play a trick on you!", emotion: "excited" },
+      { text: "Rolo realized that maybe he had gone a bit too far with his prank. — Sorry, Timothée. I didn’t mean to upset you that much.", emotion: "guilty" },
+      { text: "Timothée smiled and said: — It’s okay, Rolo, but you need to learn not to overdo it. Jokes are fun, but you have to know when to stop.", emotion: "happy" },
+      { text: "Rolo nodded, a bit ashamed, but happy to see that Timothée wasn’t mad at him.", emotion: "happy" },
+      { text: "The next day, Rolo decided to play another prank, but this time, he wanted it to be a good deed.", emotion: "mischievous" },
+      { text: "He found some fresh vegetables in Câline the owl’s garden and decided to arrange them nicely in a basket, with a note: ‘For you, Câline, with all my love.’", emotion: "playful" },
+      { text: "Câline, surprised, found the basket and read the message. She was touched by the gesture. — Oh, how adorable, thank you Rolo!", emotion: "happy" },
+      { text: "Rolo watched from afar, satisfied with his kind prank. He had learned that he could be mischievous while making his friends happy.", emotion: "proud" },
+      { text: "On his way home, Rolo thought about his day. He was happy to have learned that he could be playful without hurting others.", emotion: "happy" },
+      { text: "That night, he fell asleep with a smile on his face, thinking about all the jokes he would play in the future—with more kindness.", emotion: "happy" }
+    ]
+  },
+  tiger: {
+    title: "The Shy Tiger",
+    pages: [
+      { text: "Once upon a time, there was a young tiger named Téo. He lived in a large forest in the heart of the jungle, surrounded by his animal friends.", emotion: "happy" },
+      { text: "Téo was a very shy tiger. Even though he was strong and powerful, he was always afraid to talk to the other animals and preferred to stay alone.", emotion: "shy" },
+      { text: "One day, the other animals of the jungle decided to throw a big party to celebrate the arrival of spring. Téo was invited, but he felt nervous.", emotion: "nervous" },
+      { text: "— Oh no, I’m not going, thought Téo. What if I do something embarrassing? What if no one wants to talk to me?", emotion: "worried" },
+      { text: "But his mother, seeing him hesitate, said: — Téo, it’s important to come out of your shell from time to time. You’ll see, you’ll have fun!", emotion: "encouraging" },
+      { text: "Téo took a deep breath and finally decided to go. When he arrived at the party, he hid behind a tree to watch.", emotion: "shy" },
+      { text: "The animals were dancing, singing, and having fun together. Téo watched them silently, admiring their joy, but he still didn’t feel ready to join them.", emotion: "shy" },
+      { text: "Suddenly, a little bird came near him. — Why aren’t you dancing, Téo? asked the bird with a smile.", emotion: "curious" },
+      { text: "— I… I’m too shy, replied Téo, lowering his head.", emotion: "shy" },
+      { text: "The bird came closer and said: — You know, everyone is here to have fun. There’s nothing to be afraid of. Come on, dance with us, you’ll feel good!", emotion: "encouraging" },
+      { text: "Téo hesitated, but the bird was so kind that he decided to give it a try. He joined the other animals, very timid at first.", emotion: "shy" },
+      { text: "After a few minutes, he started to feel more at ease. He made a few awkward dance steps, but the other animals encouraged him and cheered him on.", emotion: "happy" },
+      { text: "— Well done, Téo! shouted a monkey, laughing. You’re a great dancer!", emotion: "happy" },
+      { text: "Téo blushed, but felt proud of himself. Finally, he forgot his shyness and let himself be carried by the music.", emotion: "happy" },
+      { text: "— See, Téo, it wasn’t that hard, said the bird sitting next to him. Sometimes, you just need to take a little step to overcome your fears.", emotion: "happy" },
+      { text: "Téo smiled and realized he had had a wonderful time. He had finally dared to join in and have fun.", emotion: "proud" },
+      { text: "That night, after the party, Téo returned home with a light and happy heart. He had learned that even if he was shy, he could find the courage to act.", emotion: "happy" },
+      { text: "— Next time, I’ll be the first to dance, thought Téo with a smile. And I’ll be less shy!", emotion: "proud" }
+    ]
   }
-};
+  
+}};
 
 function App() {
-  const [currentStory, setCurrentStory] = useState<StoryKey>('french');
+  const [currentStory, setCurrentStory] = useState<StoryKey>('wolf');
   const [currentPage, setCurrentPage] = useState(0);
   const [isPlaying, setIsPlaying] = useState(false);
   const [showStorySelector, setShowStorySelector] = useState(false);
   const [waitingForResponse, setWaitingForResponse] = useState(false);
-  const [language, setLanguage] = useState<'french' | 'english'>('french');
+  const [language, setLanguage] = useState<Language>('french');
   const utteranceRef = useRef<SpeechSynthesisUtterance | null>(null);
 
   useEffect(() => {
+    if (utteranceRef.current) {
+      window.speechSynthesis.cancel(); // Annule toujours la lecture précédente
+    }
+  
     if (isPlaying && !waitingForResponse) {
-      const text = stories[currentStory].pages[currentPage].text;
+      const text = stories[language][currentStory].pages[currentPage].text;
       utteranceRef.current = new SpeechSynthesisUtterance(text);
       utteranceRef.current.lang = language === 'french' ? 'fr-FR' : 'en-US';
       utteranceRef.current.onend = () => {
         setCurrentPage((prev) => {
-          if (prev < stories[currentStory].pages.length - 1) {
-            const nextPage = prev + 1;
-            if (stories[currentStory].pages[nextPage].emotion === 'asking') {
+          const nextPage = prev + 1;
+          if (nextPage < stories[language][currentStory].pages.length) {
+            if (stories[language][currentStory].pages[nextPage].emotion === 'asking') {
               setWaitingForResponse(true);
               setIsPlaying(false);
             }
@@ -279,6 +420,7 @@ function App() {
       window.speechSynthesis.speak(utteranceRef.current);
     }
   }, [isPlaying, currentStory, currentPage, waitingForResponse, language]);
+  
 
   const getEmotionIcon = (emotion: string) => {
     const imageMap: Record<string, string> = {
@@ -319,7 +461,6 @@ function App() {
 
   const handleLanguageChange = (lang: 'french' | 'english') => {
     setLanguage(lang);
-    setCurrentStory(lang);
     setCurrentPage(0);
     setIsPlaying(false);
     setWaitingForResponse(false);
@@ -336,8 +477,12 @@ function App() {
     };
 
     const responseText = responseTexts[emotion];
-    const updatedStory = { ...stories[currentStory] };
+    const updatedStory = { ...stories[language][currentStory] };
     updatedStory.pages[currentPage + 1].text = responseText;
+    updatedStory.pages[currentPage + 1].emotion = emotion; // ✅ ajoute cette ligne
+
+    stories[language][currentStory] = updatedStory;
+
 
     setWaitingForResponse(false);
     setCurrentPage((prev) => prev + 1);
@@ -348,16 +493,41 @@ function App() {
     if (utteranceRef.current) {
       window.speechSynthesis.cancel();
     }
-    setCurrentPage((prev) => Math.min(prev + 1, stories[currentStory].pages.length - 1));
-    setIsPlaying(true);
+  
+    const nextPage = currentPage + 1;
+    const nextEmotion = stories[language][currentStory].pages[nextPage]?.emotion;
+  
+    // Si la prochaine page demande une réponse, on bloque
+    if (nextEmotion === 'asking') {
+      setCurrentPage(nextPage);
+      setIsPlaying(false);
+      setWaitingForResponse(true);
+
+
+    } else {
+      setCurrentPage((prev) => Math.min(prev + 1, stories[language][currentStory].pages.length - 1));
+      setIsPlaying(true);
+    }
   };
+  
 
   const handlePreviousPage = () => {
     if (utteranceRef.current) {
       window.speechSynthesis.cancel();
     }
+
+    let targetPage = currentPage - 2;
+
+  // Ne pas retourner sur une page de type 'asking'
+  while (targetPage >= 0 && stories[language][currentStory].pages[targetPage].emotion === 'asking') {
+    targetPage--;
+  }
+
+  if (targetPage >= 0) {
     setCurrentPage((prev) => Math.max(prev - 1, 0));
     setIsPlaying(true);
+  }
+    
   };
 
   return (
@@ -390,21 +560,41 @@ function App() {
 
           {showStorySelector && (
             <div className="mb-8 grid grid-cols-1 gap-4">
-              {Object.entries(stories).map(([key, story]) => (
-                <button
-                  key={key}
-                  onClick={() => handleStorySelect(key as StoryKey)}
-                  className={`p-4 text-left rounded-lg transition-colors ${
-                    currentStory === key
-                      ? 'bg-purple-100 border-2 border-purple-500'
-                      : 'bg-gray-50 hover:bg-purple-50'
-                  }`}
-                >
+            {Object.entries(stories[language]).map(([key, story]) => (
+              <div key={key} className="flex items-center gap-4 p-4 bg-gray-50 hover:bg-purple-50 rounded-lg">
+                <img
+                  src={`./public/portraitsHistoires/${key}.png`} // tu peux nommer les images selon la clé de l'histoire
+                  alt={story.title}
+                  className="w-20 h-20 rounded-lg object-cover"
+                />
+                <div className="flex flex-col flex-1">
                   <h3 className="font-semibold text-lg text-purple-700">{story.title}</h3>
                   <p className="text-gray-600 text-sm">{story.pages[0].text}</p>
-                </button>
-              ))}
-            </div>
+                </div>
+                <div className="flex flex-col gap-2">
+                  <button
+                    onClick={() => {
+                      handleLanguageChange('french');
+                      handleStorySelect(key as StoryKey);
+                    }}
+                    className="text-sm px-2 py-1 bg-purple-300 text-white rounded"
+                  >
+                    🇫🇷 Français
+                  </button>
+                  <button
+                    onClick={() => {
+                      handleLanguageChange('english');
+                      handleStorySelect(key as StoryKey);
+                    }}
+                    className="text-sm px-2 py-1 bg-blue-300 text-white rounded"
+                  >
+                    🇬🇧 English
+                  </button>
+                </div>
+              </div>
+            ))}
+          </div>
+          
           )}
 
           <div className="flex flex-col items-center mb-8">
@@ -415,12 +605,12 @@ function App() {
               className="absolute inset-0 w-full h-full object-contain z-10"
             />
             <div className="absolute inset-0 flex items-center justify-center mt-6">
-              {getEmotionIcon(stories[currentStory].pages[currentPage].emotion)}
+              {getEmotionIcon(stories[language][currentStory].pages[currentPage].emotion)}
             </div>
           </div>
 
             <div className="text-xl text-center font-medium text-gray-700 min-h-[4rem]">
-              {stories[currentStory].pages[currentPage].text}
+              {stories[language][currentStory].pages[currentPage].text}
             </div>
           </div>
 
@@ -455,7 +645,7 @@ function App() {
             <button
               onClick={handleNextPage}
               className="px-4 py-2 bg-purple-500 text-white rounded-lg hover:bg-purple-600 disabled:opacity-50"
-              disabled={currentPage === stories[currentStory].pages.length - 1 || waitingForResponse}
+              disabled={currentPage === stories[language][currentStory].pages.length - 1 || waitingForResponse}
             >
               Suivant
             </button>
