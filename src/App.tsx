@@ -62,6 +62,137 @@ const stories = {
       { text: "À table, mes amis, les macarons sont prêts !", emotion: "happy" }
     ]
   },
+  cat: {
+    title: "Le Chat Craintif",
+    pages: [
+      { text: "Il était une fois un petit chat nommé Grizou, qui vivait dans une maison cosy, entouré de ses amis. Grizou adorait sa vie tranquille.", emotion: "happy" },
+      { text: "Mais Grizou avait un grand problème : il était très craintif. Il avait peur de tout ! Des bruits, des ombres, des nuages… tout l'effrayait.", emotion: "fear" },
+      { text: "Quand Grizou entendait un bruit étrange, il se cachait sous le canapé et tremblait de peur.", emotion: "fear" },
+      { text: "Un jour, Grizou aperçut une ombre passer près de la fenêtre. Il sursauta et se réfugia sous la table, le cœur battant.", emotion: "fear" },
+      { text: "— Grizou, pourquoi as-tu peur ? demanda son ami, le gentil chien Max, en s'approchant.", emotion: "neutral" },
+      { text: "— J'ai vu une ombre, je crois que c'est un monstre ! répondit Grizou, tout tremblant.", emotion: "fear" },
+      { text: "— Oh, mais ce n'est rien, c'est juste un arbre qui bouge avec le vent ! dit Max en rigolant.", emotion: "happy" },
+      { text: "— Un arbre ? Vraiment ? demanda Grizou, incertain.", emotion: "neutral" },
+      { text: "— Oui ! Et pour te montrer que tu n'as rien à craindre, viens avec moi, on va explorer !", emotion: "excited" },
+      { text: "Grizou suivit Max à l'extérieur, tout en se repliant sur lui-même. Mais plus il marchait, plus il se sentait nerveux.", emotion: "fear" },
+      { text: "— Regarde, Grizou, c'est juste une branche qui bouge dans le vent, expliqua Max en pointant un arbre.", emotion: "happy" },
+      { text: "Grizou observa attentivement. Effectivement, ce n'était qu'une branche qui se balançait doucement. Mais il n'était toujours pas rassuré.", emotion: "neutral" },
+      { text: "— Et si c'était un monstre déguisé en branche ? murmura Grizou.", emotion: "fear" },
+      { text: "Max sourit et dit : — Grizou, il n'y a pas de monstres. Parfois, nos peurs grandissent dans notre tête, mais elles ne sont pas réelles.", emotion: "happy" },
+      { text: "Max proposa alors de faire une petite promenade dans la forêt pour aider Grizou à se détendre.", emotion: "happy" },
+      { text: "— Si tu te sens effrayé, je serai là pour toi, dit Max en le rassurant.", emotion: "love" },
+      { text: "Grizou, bien que nerveux, accepta de suivre son ami. Ils marchaient tranquillement, et à chaque bruit, Grizou se crispait, mais Max lui rappelait que tout allait bien.", emotion: "neutral" },
+      { text: "Soudain, un petit cri perça l'air. Grizou sursauta et se cacha derrière un arbre.", emotion: "fear" },
+      { text: "— Ne t'inquiète pas, c'est juste un oiseau, dit Max, souriant.", emotion: "happy" },
+      { text: "Grizou jeta un coup d'œil et vit effectivement un petit oiseau qui chantait joyeusement sur une branche.", emotion: "happy" },
+      { text: "— Tu vois, il n'y a rien à craindre, ajouta Max.", emotion: "happy" },
+      { text: "Grizou, bien qu'encore nerveux, se sentit un peu plus en sécurité. Il suivit Max plus loin, ses pattes moins tremblantes.", emotion: "neutral" },
+      { text: "— Max, merci de m'aider à surmonter mes peurs, dit Grizou, touché.", emotion: "love" },
+      { text: "— C'est normal, Grizou ! Les amis sont là pour se soutenir ! répondit Max.", emotion: "happy" },
+      { text: "En rentrant chez eux, Grizou se sentit plus serein. Il avait appris qu'il n'y avait pas de monstres et que parfois, nos peurs étaient juste des illusions.", emotion: "happy" },
+      { text: "Le soir, Grizou s'endormit paisiblement, un sourire aux lèvres, content d'avoir affronté ses craintes.", emotion: "happy" },
+      { text: "Tout est bien qui finit bien, pensa Grizou en fermant les yeux, un sentiment de paix envahissant son cœur.", emotion: "happy" }
+    ]
+  },
+  bear: {
+    title: "Bouba, l'Ourson Très Mignon",
+    pages: [
+      { text: "Il était une fois, dans une forêt enchantée, un petit ourson nommé Bouba. Bouba était un ourson tout doux, tout mignon, avec des yeux pétillants et un sourire qui illuminait la forêt.", emotion: "happy" },
+      { text: "Tous les animaux de la forêt aimaient Bouba. Il avait une façon toute particulière de sauter en rond quand il était joyeux, et tout le monde riait quand il faisait ses petites pirouettes.", emotion: "happy" },
+      { text: "Mais il y avait une chose que Bouba adorait plus que tout : faire des câlins ! Il câlinait ses amis tous les jours : les oiseaux, les lapins, et même les grands arbres !", emotion: "loving" },
+      { text: "Un matin, Bouba se réveilla tôt et décida que cette journée serait spéciale. Il voulait offrir un câlin à chaque être vivant de la forêt.", emotion: "excited" },
+      { text: "Il commença par le vieux hérisson Hector, qui dormait encore sous un tas de feuilles. Bouba s'approcha doucement et lui fit un câlin tout doux. — Hé ! Oh, merci Bouba, ronronna Hector en souriant.", emotion: "happy" },
+      { text: "Ensuite, Bouba se rendit chez Léon, le lapin. Il était occupé à manger des carottes, mais quand il vit Bouba s'approcher, il sourit et ouvrit ses bras. Bouba le serra dans ses bras tout mous et tout chauds.", emotion: "happy" },
+      { text: "— Merci Bouba, tu es vraiment le plus gentil des oursons ! dit Léon, tout joyeux.", emotion: "happy" },
+      { text: "Bouba se rendit ensuite chez Gigi, la girafe. Elle avait un long cou, mais Bouba savait comment l'atteindre : il sauta, sauta encore, jusqu'à ce qu'il puisse lui faire un câlin tout doux.", emotion: "happy" },
+      { text: "— Oh, Bouba ! dit Gigi en baissant son long cou. Quelle belle surprise !", emotion: "happy" },
+      { text: "Bouba, tout content de répandre de la joie, continua sa route. Il allait donner des câlins à tout le monde : aux écureuils, aux oiseaux, aux arbres, et même aux petites fleurs qui se levaient sous les rayons du soleil.", emotion: "joyful" },
+      { text: "Mais après un moment, Bouba se rendit compte qu'il avait câliné tout le monde, sauf une personne très importante : sa maman.", emotion: "surprised" },
+      { text: "Bouba courut alors chez sa maman, qui était en train de préparer des baies pour le goûter. Il se jeta dans ses bras et la serra fort.", emotion: "loving" },
+      { text: "— Maman, je t'aime tellement ! dit Bouba, tout heureux.", emotion: "loving" },
+      { text: "Sa maman lui sourit tendrement et lui répondit : — Je t'aime aussi, mon petit Bouba. Tu es un ourson tellement gentil et attentionné.", emotion: "love" },
+      { text: "Bouba se sentit tout chaud à l'intérieur. Il comprit alors que la meilleure chose qu'il pouvait faire, c'était de partager son amour avec ceux qu'il aimait.", emotion: "happy" },
+      { text: "Ce soir-là, après avoir distribué des câlins à tout le monde, Bouba s'endormit paisiblement, le cœur plein de bonheur, entouré de l'amour de sa maman.", emotion: "happy" },
+      { text: "Et il se dit en fermant les yeux : — Demain, je donnerai encore plus de câlins. Parce que plus on en donne, plus le monde devient beau.", emotion: "love" }
+    ]
+  },
+  rabbit: {
+    title: "Le Lapin Curieux",
+    pages: [
+      { text: "Il était une fois un petit lapin nommé Benjamin, qui vivait dans une grande prairie verte, entouré de fleurs et de ses amis.", emotion: "happy" },
+      { text: "Benjamin était un lapin très curieux. Il adorait explorer, découvrir de nouveaux endroits et poser mille questions.", emotion: "curious" },
+      { text: "Un matin, Benjamin aperçut un petit sentier qui serpentait à travers les arbres. Il n'avait jamais vu ce chemin auparavant et il décida de le suivre.", emotion: "excited" },
+      { text: "— Où mène ce sentier ? se demanda Benjamin, tout excité à l'idée de découvrir une nouvelle aventure.", emotion: "curious" },
+      { text: "En s'aventurant plus loin, il rencontra une vieille tortue assise sous un arbre.", emotion: "neutral" },
+      { text: "— Bonjour, tortue ! lui dit Benjamin. Que fais-tu ici ? Je n'avais jamais vu ce sentier avant.", emotion: "curious" },
+      { text: "— Oh, ce sentier mène à un endroit très spécial, répondit la tortue avec un sourire. C'est un endroit où tous les secrets de la forêt se cachent.", emotion: "mysterious" },
+      { text: "Benjamin, tout excité, décida de suivre le sentier jusqu'à cet endroit mystérieux.", emotion: "excited" },
+      { text: "Le chemin était parsemé de fleurs aux couleurs éclatantes et de papillons qui virevoltaient dans l'air.", emotion: "happy" },
+      { text: "Mais plus il avançait, plus il se sentait un peu nerveux. L'endroit devenait plus sombre, et les arbres semblaient se rapprocher.", emotion: "nervous" },
+      { text: "— Peut-être que je devrais faire demi-tour, pensa Benjamin, mais il était trop curieux pour revenir en arrière.", emotion: "neutral" },
+      { text: "Soudain, il aperçut une petite lumière qui brillait au bout du sentier. Il se sentit rassuré et s'approcha.", emotion: "happy" },
+      { text: "En arrivant à la lumière, Benjamin découvrit une clairière magnifique, remplie de lucioles scintillantes. C'était un endroit magique qu'il n'avait jamais vu auparavant.", emotion: "amazed" },
+      { text: "— Wow ! C'est incroyable ! s'exclama Benjamin. C'est l'endroit le plus beau que j'aie jamais vu !", emotion: "happy" },
+      { text: "Il se coucha dans l'herbe douce et observa les lucioles danser autour de lui. C'était un moment de pure magie.", emotion: "peaceful" },
+      { text: "Mais soudain, Benjamin se souvint de sa famille et de ses amis. Il avait hâte de leur raconter sa découverte.", emotion: "neutral" },
+      { text: "Alors, il se leva et se dirigea vers la sortie de la clairière, en se sentant fier de sa curiosité.", emotion: "proud" },
+      { text: "— Je vais leur raconter tout ce que j'ai vu ! se dit Benjamin avec enthousiasme.", emotion: "happy" },
+      { text: "Quand il arriva chez lui, ses amis étaient impatients de savoir où il était allé.", emotion: "excited" },
+      { text: "— Benjamin, où étais-tu ? s'exclamèrent-ils. On t'a cherché partout !", emotion: "concerned" },
+      { text: "— J'ai trouvé un endroit secret, répondit Benjamin en souriant. Il y a une clairière magique avec des lucioles !", emotion: "happy" },
+      { text: "Ses amis étaient impressionnés et décidèrent de partir en aventure avec lui pour découvrir ce lieu merveilleux.", emotion: "excited" },
+      { text: "Et ainsi, Benjamin et ses amis partirent ensemble, curieux de découvrir d'autres secrets de la forêt.", emotion: "excited" },
+      { text: "Benjamin sourit en pensant que sa curiosité l'avait conduit à une belle aventure, et il se promit de ne jamais cesser de poser des questions et de découvrir le monde autour de lui.", emotion: "happy" }
+    ]
+  },
+  raton: {
+    title: "Le Raton Laveur Malicieux",
+    pages: [
+      { text: "Il était une fois un petit raton laveur nommé Rolo. Il vivait dans une forêt luxuriante, pleine de mystères et de secrets.", emotion: "happy" },
+      { text: "Rolo était un raton laveur très malicieux. Il adorait faire des farces à ses amis. Si quelqu'un n'était pas attentif, Rolo en profitait pour faire une blague !", emotion: "mischievous" },
+      { text: "Un jour, il décida de jouer un tour à son ami, le cerf Timothée. Il savait que Timothée adorait manger des baies sucrées.", emotion: "mischievous" },
+      { text: "Rolo se glissa discrètement près de la réserve de baies de Timothée et en échangea quelques-unes contre des baies épicées qu'il avait trouvées.", emotion: "sneaky" },
+      { text: "— Timothée va adorer, pensa Rolo en se cachant derrière un buisson pour observer la scène.", emotion: "excited" },
+      { text: "Lorsque Timothée arriva pour goûter ses baies, il les trouva délicieuses au début. Mais au bout de quelques bouchées, il se mit à faire une grimace.", emotion: "surprised" },
+      { text: "— Ah, mais qu'est-ce que c'est que ça ? s'écria Timothée. Ces baies sont épicées !", emotion: "shocked" },
+      { text: "Rolo éclata de rire dans son buisson. Mais il ne s'attendait pas à ce qui allait se passer.", emotion: "mischievous" },
+      { text: "Timothée, un peu surpris, se tourna et aperçut Rolo qui riait. — Alors comme ça, c'est toi le petit farceur !", emotion: "angry" },
+      { text: "Rolo se sentit un peu coupable, mais il ne pouvait s'empêcher de rigoler. — Oh, Timothée, c'était juste pour rire !", emotion: "mischievous" },
+      { text: "— Eh bien, c'est toi qui rigoles ! rétorqua Timothée. La prochaine fois, c'est moi qui te jouerai un tour !", emotion: "excited" },
+      { text: "Rolo comprit qu'il était peut-être allé un peu trop loin avec sa farce. — Désolé, Timothée. Je ne voulais pas te déranger autant.", emotion: "guilty" },
+      { text: "Timothée sourit et dit : — Ce n'est pas grave, Rolo, mais il faut que tu apprennes à ne pas trop exagérer. Les blagues sont amusantes, mais il faut savoir quand s'arrêter.", emotion: "happy" },
+      { text: "Rolo acquiesça, un peu honteux, mais heureux de voir que Timothée n'était pas fâché contre lui.", emotion: "happy" },
+      { text: "Le lendemain, Rolo décida de faire une autre farce, mais cette fois-ci, il voulait que ce soit une bonne action.", emotion: "mischievous" },
+      { text: "Il trouva des légumes frais dans le jardin de la chouette Câline et décida de les arranger joliment dans un panier, avec un mot : 'Pour toi, Câline, avec tout mon amour'.", emotion: "playful" },
+      { text: "Câline, surprise, trouva le panier et lut le message. Elle se sentit touchée par ce geste. — Oh, mais c'est adorable, merci Rolo !", emotion: "happy" },
+      { text: "Rolo observa tout ça de loin, satisfait de sa farce gentille. Il avait compris qu'il pouvait être malicieux tout en faisant plaisir à ses amis.", emotion: "proud" },
+      { text: "En rentrant chez lui, Rolo réfléchit à sa journée. Il était content d'avoir appris qu'il était possible d'être malicieux sans blesser les autres.", emotion: "happy" },
+      { text: "Ce soir-là, il s'endormit, un sourire aux lèvres, en pensant à toutes les blagues qu'il ferait à l'avenir, mais avec plus de gentillesse.", emotion: "happy" }
+    ]
+  },
+  tiger: {
+    title: "Le Tigre Timide",
+    pages: [
+      { text: "Il était une fois un jeune tigre nommé Téo. Il vivait dans une grande forêt au cœur de la jungle, entouré de ses amis les animaux.", emotion: "happy" },
+      { text: "Téo était un tigre très timide. Bien qu'il fût fort et puissant, il avait toujours peur de parler aux autres animaux et préférait rester dans son coin.", emotion: "shy" },
+      { text: "Un jour, les autres animaux de la jungle décidèrent d'organiser une grande fête pour célébrer l'arrivée du printemps. Téo était invité, mais il se sentait nerveux.", emotion: "nervous" },
+      { text: "— Oh non, je ne vais pas y aller, pensa Téo. Et si je faisais quelque chose de gênant ? Et si personne ne voulait me parler ?", emotion: "worried" },
+      { text: "Mais sa mère, en le voyant hésiter, lui dit : — Téo, il est important de sortir de ta coquille de temps en temps. Tu verras, tu t'amuseras !", emotion: "encouraging" },
+      { text: "Téo prit une grande inspiration et décida finalement d'y aller. Lorsqu'il arriva à la fête, il se cacha derrière un arbre pour observer.", emotion: "shy" },
+      { text: "Les animaux dansaient, chantaient et s'amusaient ensemble. Téo les regarda en silence, admirant leur joie, mais il ne se sentait toujours pas prêt à les rejoindre.", emotion: "shy" },
+      { text: "Tout à coup, un petit oiseau arriva près de lui. — Pourquoi tu ne danses pas, Téo ? demanda-t-il avec un sourire.", emotion: "curious" },
+      { text: "— Je… je suis trop timide, répondit Téo, baissant la tête.", emotion: "shy" },
+      { text: "L'oiseau s'approcha et lui dit : — Tu sais, tout le monde est ici pour s'amuser. Tu n'as pas à avoir peur. Viens, danse avec nous, tu te sentiras bien !", emotion: "encouraging" },
+      { text: "Téo hésita, mais l'oiseau était si gentil qu'il décida de tenter sa chance. Il se joignit aux autres animaux, au début très timide.", emotion: "shy" },
+      { text: "Au bout de quelques minutes, il commença à se sentir plus à l'aise. Il fit quelques pas de danse maladroits, mais les autres animaux l'encouragèrent et lui firent des signes de soutien.", emotion: "happy" },
+      { text: "— Bien joué, Téo ! s'écria un singe en riant. Tu es un super danseur !", emotion: "happy" },
+      { text: "Téo rougit, mais il se sentit fier de lui. Finalement, il oublia sa timidité et se laissa emporter par la musique.", emotion: "happy" },
+      { text: "— Tu vois, Téo, ce n'était pas si difficile, dit l'oiseau en s'installant à côté de lui. Parfois, il suffit de faire un petit pas pour surmonter ses peurs.", emotion: "happy" },
+      { text: "Téo sourit et se rendit compte qu'il avait passé un moment merveilleux. Il avait enfin osé se mêler aux autres et s'amuser.", emotion: "proud" },
+      { text: "Le soir, après la fête, Téo rentra chez lui, le cœur léger et heureux. Il avait appris que même s'il était timide, il pouvait trouver le courage d'agir.", emotion: "happy" },
+      { text: "— La prochaine fois, je serai le premier à danser, pensa Téo avec un sourire. Et je serai moins timide !", emotion: "proud" }
+    ]
+  },
   english: {
     title: "The Emotional Wolf",
     pages: [
@@ -161,9 +292,10 @@ function App() {
     };
 
     const imageSrc = imageMap[emotion] || '/emotions/default.png';
-
-    return <img src={imageSrc} alt={emotion} className="w-32 h-32 object-contain" />;
+  
+    return <img src={imageSrc} alt={emotion} className="w-44 h-44 object-contain z-0" />;
   };
+  
 
   const handleReset = () => {
     setCurrentPage(0);
@@ -276,9 +408,17 @@ function App() {
           )}
 
           <div className="flex flex-col items-center mb-8">
-            <div className="bg-gray-100 rounded-full p-8 mb-6">
+          <div className="relative w-60 h-60 mb-6">
+            <img
+              src="/emotions/teteQT.png" // image de fond circulaire ou décorative
+              alt="cadre"
+              className="absolute inset-0 w-full h-full object-contain z-10"
+            />
+            <div className="absolute inset-0 flex items-center justify-center mt-6">
               {getEmotionIcon(stories[currentStory].pages[currentPage].emotion)}
             </div>
+          </div>
+
             <div className="text-xl text-center font-medium text-gray-700 min-h-[4rem]">
               {stories[currentStory].pages[currentPage].text}
             </div>
