@@ -8,6 +8,27 @@ type Language = 'french' | 'english';
 // Define the type for emotions
 type Emotion = 'happy' | 'sad' | 'love' | 'angry' | 'excited' | 'neutral';
 
+// Button labels for different languages
+const buttonLabels = {
+  french: {
+    chooseStory: "Choisir une histoire",
+    previous: "Précédent",
+    play: "Lecture",
+    pause: "Pause",
+    next: "Suivant",
+    restart: "Recommencer"
+  },
+  english: {
+    chooseStory: "Choose a story",
+    previous: "Previous",
+    play: "Play",
+    pause: "Pause",
+    next: "Next",
+    restart: "Restart"
+  }
+};
+
+// Multiple stories with emotion markers
 const stories = {
   french: {
     wolf: {
@@ -383,6 +404,20 @@ const stories = {
   }
 };
 
+// About text content in both languages
+const aboutContent = {
+  french: {
+    title: "À propos du projet",
+    description1: "Cette interface simule le comportement du QT Robot lors de la narration d'histoires. Le robot affiche différentes expressions faciales en fonction du contexte de l'histoire, créant ainsi une expérience interactive et engageante pour les enfants de 3-4 ans.",
+    description2: "Dans la version finale sur le robot physique, l'interface utilisera la synthèse vocale et pourra éventuellement analyser les réactions de l'enfant pour adapter la narration."
+  },
+  english: {
+    title: "About the Project",
+    description1: "This interface simulates QT Robot's behavior during storytelling. The robot displays different facial expressions based on the story context, creating an interactive and engaging experience for children aged 3-4.",
+    description2: "In the final version on the physical robot, the interface will use voice synthesis and may eventually analyze the child's reactions to adapt the narration."
+  }
+};
+
 function App() {
   const [currentStory, setCurrentStory] = useState<StoryKey>('wolf');
   const [currentPage, setCurrentPage] = useState(0);
@@ -555,7 +590,7 @@ function App() {
                 className="flex items-center justify-center gap-2 px-4 py-2 bg-purple-500 text-white rounded-lg hover:bg-purple-600 w-full md:w-auto"
               >
                 <BookOpenCheck className="w-5 h-5" />
-                Choisir une histoire
+                {buttonLabels[language].chooseStory}
               </button>
               <select
                 value={language}
@@ -650,39 +685,38 @@ function App() {
               className="px-4 py-2 bg-purple-500 text-white rounded-lg hover:bg-purple-600 disabled:opacity-50 w-full md:w-auto"
               disabled={currentPage === 0}
             >
-              Précédent
+              {buttonLabels[language].previous}
             </button>
             <button
               onClick={() => setIsPlaying(!isPlaying)}
               className="px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 w-full md:w-auto"
             >
-              {isPlaying ? 'Pause' : 'Lecture'}
+              {isPlaying ? buttonLabels[language].pause : buttonLabels[language].play}
             </button>
             <button
               onClick={handleNextPage}
               className="px-4 py-2 bg-purple-500 text-white rounded-lg hover:bg-purple-600 disabled:opacity-50 w-full md:w-auto"
               disabled={currentPage === stories[language][currentStory].pages.length - 1 || waitingForResponse}
             >
-              Suivant
+              {buttonLabels[language].next}
             </button>
             <button
               onClick={handleReset}
               className="px-4 py-2 bg-gray-500 text-white rounded-lg hover:bg-gray-600 w-full md:w-auto"
             >
-              Recommencer
+              {buttonLabels[language].restart}
             </button>
           </div>
           {showAbout && (
             <div className="mt-8 border-t pt-8">
-              <h2 className="text-xl font-semibold mb-4 text-purple-600">À propos du projet</h2>
+              <h2 className="text-xl font-semibold mb-4 text-purple-600">
+                {aboutContent[language].title}
+              </h2>
               <p className="text-gray-700 mb-4">
-                Cette interface simule le comportement du QT Robot lors de la narration d'histoires.
-                Le robot affiche différentes expressions faciales en fonction du contexte de l'histoire,
-                créant ainsi une expérience interactive et engageante pour les enfants de 3-4 ans.
+                {aboutContent[language].description1}
               </p>
               <p className="text-gray-700">
-                Dans la version finale sur le robot physique, l'interface utilisera la synthèse vocale
-                et pourra éventuellement analyser les réactions de l'enfant pour adapter la narration.
+                {aboutContent[language].description2}
               </p>
             </div>
           )}
