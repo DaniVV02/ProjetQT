@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
-import { Smile, Angry, Frown, Meh, Heart, BookOpen, BookOpenCheck } from 'lucide-react';
+import { Smile, Angry, Frown, Meh, Heart, BookOpen, BookOpenCheck, Info } from 'lucide-react';
 
 // Define the type for story keys
 type StoryKey = keyof typeof stories['french'];
@@ -392,6 +392,7 @@ function App() {
   const [showStorySelector, setShowStorySelector] = useState(false);
   const [waitingForResponse, setWaitingForResponse] = useState(false);
   const [language, setLanguage] = useState<Language>('french');
+  const [showAbout, setShowAbout] = useState(false);
   const utteranceRef = useRef<SpeechSynthesisUtterance | null>(null);
 
   useEffect(() => {
@@ -558,10 +559,18 @@ function App() {
       <div className="max-w-2xl mx-auto">
         <div className="bg-white rounded-2xl shadow-xl p-8 mb-8">
           <div className="flex justify-between items-center mb-8">
-            <h1 className="text-3xl font-bold text-center text-purple-600 flex items-center gap-2">
-              <BookOpen className="w-8 h-8" />
-              QT Robot Storyteller
-            </h1>
+          <div className="flex items-center gap-4">
+              <button
+                onClick={() => setShowAbout(!showAbout)}
+                className="text-purple-600 hover:text-purple-800 transition-colors"
+                aria-label="Afficher les informations"
+              >
+                <Info className="w-8 h-8" />
+              </button>
+              <h1 className="text-3xl font-bold text-center text-purple-600">
+                QT Robot Storyteller
+              </h1>
+            </div>
             <div className="flex gap-4">
               <button
                 onClick={() => setShowStorySelector(!showStorySelector)}
@@ -580,7 +589,7 @@ function App() {
               </select>
             </div>
           </div>
-
+        
           {showStorySelector && (
             <div className="mb-8 grid grid-cols-1 gap-4">
             {Object.entries(stories[language]).map(([key, story]) => (
@@ -694,20 +703,22 @@ function App() {
               Recommencer
             </button>
           </div>
+          {showAbout && (
+            <div className="mt-8 border-t pt-8">
+              <h2 className="text-xl font-semibold mb-4 text-purple-600">À propos du projet</h2>
+              <p className="text-gray-700 mb-4">
+                Cette interface simule le comportement du QT Robot lors de la narration d'histoires.
+                Le robot affiche différentes expressions faciales en fonction du contexte de l'histoire,
+                créant ainsi une expérience interactive et engageante pour les enfants de 3-4 ans.
+              </p>
+              <p className="text-gray-700">
+                Dans la version finale sur le robot physique, l'interface utilisera la synthèse vocale
+                et pourra éventuellement analyser les réactions de l'enfant pour adapter la narration.
+              </p>
+            </div>
+          )}
         </div>
-
-        <div className="bg-white rounded-2xl shadow-xl p-8">
-          <h2 className="text-xl font-semibold mb-4 text-purple-600">À propos du projet</h2>
-          <p className="text-gray-700 mb-4">
-            Cette interface simule le comportement du QT Robot lors de la narration d'histoires.
-            Le robot affiche différentes expressions faciales en fonction du contexte de l'histoire,
-            créant ainsi une expérience interactive et engageante pour les enfants de 3-4 ans.
-          </p>
-          <p className="text-gray-700">
-            Dans la version finale sur le robot physique, l'interface utilisera la synthèse vocale
-            et pourra éventuellement analyser les réactions de l'enfant pour adapter la narration.
-          </p>
-        </div>
+        
       </div>
     </div>
   );
