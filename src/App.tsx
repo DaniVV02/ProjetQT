@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
-import { Smile, Angry, Frown, Meh, Heart, BookOpen, BookOpenCheck, Info } from 'lucide-react';
+import { Smile, Angry, Frown, Meh, Heart, Laugh, BookOpenCheck, Info } from 'lucide-react';
 
 // Define the type for story keys
 type StoryKey = keyof typeof stories['french'];
@@ -660,18 +660,13 @@ function App() {
               <button onClick={() => handleEmojiClick('angry')} className="p-4 rounded-full bg-orange-200">
                 <Angry className="w-8 h-8" />
               </button>
-              <button onClick={() => handleEmojiClick('surprised')} className="p-4 rounded-full bg-purple-200">
-                <Meh className="w-8 h-8" />
-              </button>
               <button onClick={() => handleEmojiClick('excited')} className="p-4 rounded-full bg-green-200">
-                <Smile className="w-8 h-8" />
-              </button>
-              <button onClick={() => handleEmojiClick('shy')} className="p-4 rounded-full bg-pink-200">
-                <Smile className="w-8 h-8" />
+                <Laugh className="w-8 h-8" /> {/* rire pour excitement */}
               </button>
               <button onClick={() => handleEmojiClick('neutral')} className="p-4 rounded-full bg-gray-200">
-                <Smile className="w-8 h-8" />
+                <Meh className="w-8 h-8" /> {/* ici le Meh va bien */}
               </button>
+                  
             </div>
           )}
 
