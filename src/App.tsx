@@ -579,7 +579,6 @@ function App() {
                   />
                   <div className="flex flex-col flex-1">
                     <h3 className="font-semibold text-lg text-purple-700">{story.title}</h3>
-                    <p className="text-gray-600 text-sm">{story.pages[0].text}</p>
                   </div>
                   <div className="flex flex-col gap-2 mt-4 md:mt-0">
                     <button
