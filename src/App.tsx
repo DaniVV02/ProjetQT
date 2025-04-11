@@ -5,11 +5,9 @@ import { Smile, Angry, Frown, Meh, Heart, Laugh, BookOpenCheck, Info } from 'luc
 type StoryKey = keyof typeof stories['french'];
 type Language = 'french' | 'english';
 
-
 // Define the type for emotions
 type Emotion = 'happy' | 'sad' | 'love' | 'angry' | 'excited' | 'neutral';
 
-// Multiple stories with emotion markers
 const stories = {
   french: {
     wolf: {
@@ -399,7 +397,7 @@ function App() {
     if (utteranceRef.current) {
       window.speechSynthesis.cancel(); // Annule toujours la lecture précédente
     }
-  
+
     if (isPlaying && !waitingForResponse) {
       const text = stories[language][currentStory].pages[currentPage].text;
       utteranceRef.current = new SpeechSynthesisUtterance(text);
@@ -421,7 +419,6 @@ function App() {
       window.speechSynthesis.speak(utteranceRef.current);
     }
   }, [isPlaying, currentStory, currentPage, waitingForResponse, language]);
-  
 
   const getEmotionIcon = (emotion: string) => {
     const imageMap: Record<string, string> = {
@@ -437,10 +434,9 @@ function App() {
     };
 
     const imageSrc = imageMap[emotion] || '/emotions/default.png';
-  
+
     return <img src={imageSrc} alt={emotion} className="w-44 h-44 object-contain z-0" />;
   };
-  
 
   const handleReset = () => {
     setCurrentPage(0);
@@ -472,65 +468,52 @@ function App() {
     }
   };
 
-  	const handleEmojiClick = (emotion: Emotion) => {
-		var responseTexts: Record<Emotion, string> = null;
-		
-		if(language == 'french')
-		{
-			responseTexts = {
-				happy: "Je suis content que tu sois heureux!",
-				sad: "Ne sois pas triste, je suis là pour toi!",
-				angry: "Calme-toi, tout ira bien!",
-				love: "Moi aussi, je t'aime beaucoup!",
-        excited: "Super! J'adore ton enthousiasme!",
-				neutral: "D'accord, je comprends.",
-			};
-		}
-		else if(language == 'english')
-		{
-			responseTexts = {
-				happy: "I'm glad you're happy!",
-				sad: "Don't be sad, I'm here for you!",
-				angry: "Calm down, everything will be fine!",
-				love: "I love you too!",
-				excited: "Super! I love your enthusiasm!",
-				neutral: "OK, I understand.",
-			};
-		}
-		
-		const responseText = responseTexts[emotion];
-		const updatedStory = { ...stories[language][currentStory] };
-		updatedStory.pages[currentPage + 1].text = responseText;
-		updatedStory.pages[currentPage + 1].emotion = emotion; // ✅ ajoute cette ligne
-		
-		stories[language][currentStory] = updatedStory;
-		
-		setWaitingForResponse(false);
-		setCurrentPage((prev) => prev + 1);
-		setIsPlaying(true);
-	};
+  const handleEmojiClick = (emotion: Emotion) => {
+    const responseTexts: Record<Emotion, string> = language === 'french' ? {
+      happy: "Je suis content que tu sois heureux!",
+      sad: "Ne sois pas triste, je suis là pour toi!",
+      angry: "Calme-toi, tout ira bien!",
+      love: "Moi aussi, je t'aime beaucoup!",
+      excited: "Super! J'adore ton enthousiasme!",
+      neutral: "D'accord, je comprends.",
+    } : {
+      happy: "I'm glad you're happy!",
+      sad: "Don't be sad, I'm here for you!",
+      angry: "Calm down, everything will be fine!",
+      love: "I love you too!",
+      excited: "Super! I love your enthusiasm!",
+      neutral: "OK, I understand.",
+    };
+
+    const responseText = responseTexts[emotion];
+    const updatedStory = { ...stories[language][currentStory] };
+    updatedStory.pages[currentPage + 1].text = responseText;
+    updatedStory.pages[currentPage + 1].emotion = emotion;
+
+    stories[language][currentStory] = updatedStory;
+
+    setWaitingForResponse(false);
+    setCurrentPage((prev) => prev + 1);
+    setIsPlaying(true);
+  };
 
   const handleNextPage = () => {
     if (utteranceRef.current) {
       window.speechSynthesis.cancel();
     }
-  
+
     const nextPage = currentPage + 1;
     const nextEmotion = stories[language][currentStory].pages[nextPage]?.emotion;
-  
-    // Si la prochaine page demande une réponse, on bloque
+
     if (nextEmotion === 'asking') {
       setCurrentPage(nextPage);
       setIsPlaying(false);
       setWaitingForResponse(true);
-
-
     } else {
       setCurrentPage((prev) => Math.min(prev + 1, stories[language][currentStory].pages.length - 1));
       setIsPlaying(true);
     }
   };
-  
 
   const handlePreviousPage = () => {
     if (utteranceRef.current) {
@@ -539,24 +522,22 @@ function App() {
 
     let targetPage = currentPage - 2;
 
-  // Ne pas retourner sur une page de type 'asking'
-  while (targetPage >= 0 && stories[language][currentStory].pages[targetPage].emotion === 'asking') {
-    targetPage--;
-  }
+    while (targetPage >= 0 && stories[language][currentStory].pages[targetPage].emotion === 'asking') {
+      targetPage--;
+    }
 
-  if (targetPage >= 0) {
-    setCurrentPage((prev) => Math.max(prev - 1, 0));
-    setIsPlaying(true);
-  }
-    
+    if (targetPage >= 0) {
+      setCurrentPage((prev) => Math.max(prev - 1, 0));
+      setIsPlaying(true);
+    }
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-blue-100 to-purple-100 p-8">
-      <div className="max-w-2xl mx-auto">
-        <div className="bg-white rounded-2xl shadow-xl p-8 mb-8">
-          <div className="flex justify-between items-center mb-8">
-          <div className="flex items-center gap-4">
+    <div className="min-h-screen bg-gradient-to-b from-blue-100 to-purple-100 p-4 md:p-8">
+      <div className="max-w-4xl mx-auto">
+        <div className="bg-white rounded-2xl shadow-xl p-6 md:p-8 mb-8">
+          <div className="flex flex-col md:flex-row justify-between items-center mb-8">
+            <div className="flex items-center gap-4 mb-4 md:mb-0">
               <button
                 onClick={() => setShowAbout(!showAbout)}
                 className="text-purple-600 hover:text-purple-800 transition-colors"
@@ -564,14 +545,14 @@ function App() {
               >
                 <Info className="w-8 h-8" />
               </button>
-              <h1 className="text-3xl font-bold text-center text-purple-600">
+              <h1 className="text-2xl md:text-3xl font-bold text-center text-purple-600">
                 QT Robot Storyteller
               </h1>
             </div>
-            <div className="flex gap-4">
+            <div className="flex flex-col md:flex-row gap-4 w-full md:w-auto">
               <button
                 onClick={() => setShowStorySelector(!showStorySelector)}
-                className="flex items-center gap-2 px-4 py-2 bg-purple-500 text-white rounded-lg hover:bg-purple-600"
+                className="flex items-center justify-center gap-2 px-4 py-2 bg-purple-500 text-white rounded-lg hover:bg-purple-600 w-full md:w-auto"
               >
                 <BookOpenCheck className="w-5 h-5" />
                 Choisir une histoire
@@ -579,72 +560,70 @@ function App() {
               <select
                 value={language}
                 onChange={(e) => handleLanguageChange(e.target.value as 'french' | 'english')}
-                className="px-4 py-2 bg-gray-200 text-gray-800 rounded-lg"
+                className="px-4 py-2 bg-gray-200 text-gray-800 rounded-lg w-full md:w-auto mt-4 md:mt-0"
               >
                 <option value="french">Français</option>
                 <option value="english">English</option>
               </select>
             </div>
           </div>
-        
+
           {showStorySelector && (
-            <div className="mb-8 grid grid-cols-1 gap-4">
-            {Object.entries(stories[language]).map(([key, story]) => (
-              <div key={key} className="flex items-center gap-4 p-4 bg-gray-50 hover:bg-purple-50 rounded-lg">
-                <img
-                  src={`/portraitsHistoires/${key}.png`} // tu peux nommer les images selon la clé de l'histoire
-                  alt={story.title}
-                  className="w-20 h-20 rounded-lg object-cover"
-                />
-                <div className="flex flex-col flex-1">
-                  <h3 className="font-semibold text-lg text-purple-700">{story.title}</h3>
-                  <p className="text-gray-600 text-sm">{story.pages[0].text}</p>
+            <div className="mb-8 grid grid-cols-1 md:grid-cols-2 gap-4">
+              {Object.entries(stories[language]).map(([key, story]) => (
+                <div key={key} className="flex flex-col md:flex-row items-center gap-4 p-4 bg-gray-50 hover:bg-purple-50 rounded-lg">
+                  <img
+                    src={`/portraitsHistoires/${key}.png`}
+                    alt={story.title}
+                    className="w-20 h-20 rounded-lg object-cover"
+                  />
+                  <div className="flex flex-col flex-1">
+                    <h3 className="font-semibold text-lg text-purple-700">{story.title}</h3>
+                    <p className="text-gray-600 text-sm">{story.pages[0].text}</p>
+                  </div>
+                  <div className="flex flex-col gap-2 mt-4 md:mt-0">
+                    <button
+                      onClick={() => {
+                        handleLanguageChange('french');
+                        handleStorySelect(key as StoryKey);
+                      }}
+                      className="text-sm px-2 py-1 bg-purple-300 text-white rounded"
+                    >
+                      🇫🇷 Français
+                    </button>
+                    <button
+                      onClick={() => {
+                        handleLanguageChange('english');
+                        handleStorySelect(key as StoryKey);
+                      }}
+                      className="text-sm px-2 py-1 bg-blue-300 text-white rounded"
+                    >
+                      🇬🇧 English
+                    </button>
+                  </div>
                 </div>
-                <div className="flex flex-col gap-2">
-                  <button
-                    onClick={() => {
-                      handleLanguageChange('french');
-                      handleStorySelect(key as StoryKey);
-                    }}
-                    className="text-sm px-2 py-1 bg-purple-300 text-white rounded"
-                  >
-                    🇫🇷 Français
-                  </button>
-                  <button
-                    onClick={() => {
-                      handleLanguageChange('english');
-                      handleStorySelect(key as StoryKey);
-                    }}
-                    className="text-sm px-2 py-1 bg-blue-300 text-white rounded"
-                  >
-                    🇬🇧 English
-                  </button>
-                </div>
-              </div>
-            ))}
-          </div>
-          
+              ))}
+            </div>
           )}
 
           <div className="flex flex-col items-center mb-8">
-          <div className="relative w-60 h-60 mb-6">
-            <img
-              src="/emotions/teteQT.png" // image de fond circulaire ou décorative
-              alt="cadre"
-              className="absolute inset-0 w-full h-full object-contain z-10"
-            />
-            <div className="absolute inset-0 flex items-center justify-center mt-6">
-              {getEmotionIcon(stories[language][currentStory].pages[currentPage].emotion)}
+            <div className="relative w-48 h-48 md:w-60 md:h-60 mb-6">
+              <img
+                src="/emotions/teteQT.png"
+                alt="cadre"
+                className="absolute inset-0 w-full h-full object-contain z-10"
+              />
+              <div className="absolute inset-0 flex items-center justify-center mt-6">
+                {getEmotionIcon(stories[language][currentStory].pages[currentPage].emotion)}
+              </div>
             </div>
-          </div>
-
-            <div className="text-xl text-center font-medium text-gray-700 min-h-[4rem]">
+            <div className="text-lg md:text-xl text-center font-medium text-gray-700 min-h-[4rem]">
               {stories[language][currentStory].pages[currentPage].text}
             </div>
           </div>
 
           {waitingForResponse && (
-            <div className="flex justify-center gap-4 mb-8">
+            <div className="flex justify-center gap-4 mb-8 flex-wrap">
               <button onClick={() => handleEmojiClick('happy')} className="p-4 rounded-full bg-yellow-200">
                 <Smile className="w-8 h-8" />
               </button>
@@ -658,39 +637,38 @@ function App() {
                 <Angry className="w-8 h-8" />
               </button>
               <button onClick={() => handleEmojiClick('excited')} className="p-4 rounded-full bg-green-200">
-                <Laugh className="w-8 h-8" /> {/* rire pour excitement */}
+                <Laugh className="w-8 h-8" />
               </button>
               <button onClick={() => handleEmojiClick('neutral')} className="p-4 rounded-full bg-gray-200">
-                <Meh className="w-8 h-8" /> {/* ici le Meh va bien */}
+                <Meh className="w-8 h-8" />
               </button>
-                  
             </div>
           )}
 
-          <div className="flex justify-center gap-4">
+          <div className="flex flex-col md:flex-row justify-center gap-4">
             <button
               onClick={handlePreviousPage}
-              className="px-4 py-2 bg-purple-500 text-white rounded-lg hover:bg-purple-600 disabled:opacity-50"
+              className="px-4 py-2 bg-purple-500 text-white rounded-lg hover:bg-purple-600 disabled:opacity-50 w-full md:w-auto"
               disabled={currentPage === 0}
             >
               Précédent
             </button>
             <button
               onClick={() => setIsPlaying(!isPlaying)}
-              className="px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600"
+              className="px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 w-full md:w-auto"
             >
               {isPlaying ? 'Pause' : 'Lecture'}
             </button>
             <button
               onClick={handleNextPage}
-              className="px-4 py-2 bg-purple-500 text-white rounded-lg hover:bg-purple-600 disabled:opacity-50"
+              className="px-4 py-2 bg-purple-500 text-white rounded-lg hover:bg-purple-600 disabled:opacity-50 w-full md:w-auto"
               disabled={currentPage === stories[language][currentStory].pages.length - 1 || waitingForResponse}
             >
               Suivant
             </button>
             <button
               onClick={handleReset}
-              className="px-4 py-2 bg-gray-500 text-white rounded-lg hover:bg-gray-600"
+              className="px-4 py-2 bg-gray-500 text-white rounded-lg hover:bg-gray-600 w-full md:w-auto"
             >
               Recommencer
             </button>
@@ -710,7 +688,6 @@ function App() {
             </div>
           )}
         </div>
-        
       </div>
     </div>
   );
