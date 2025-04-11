@@ -5,9 +5,28 @@ import { Smile, Angry, Frown, Meh, Heart, BookOpen, BookOpenCheck, Info } from '
 type StoryKey = keyof typeof stories['french'];
 type Language = 'french' | 'english';
 
-
 // Define the type for emotions
 type Emotion = 'happy' | 'sad' | 'love' | 'angry' | 'excited' | 'neutral' | 'surprised' | 'shy';
+
+// Button labels for different languages
+const buttonLabels = {
+  french: {
+    chooseStory: "Choisir une histoire",
+    previous: "Précédent",
+    play: "Lecture",
+    pause: "Pause",
+    next: "Suivant",
+    restart: "Recommencer"
+  },
+  english: {
+    chooseStory: "Choose a story",
+    previous: "Previous",
+    play: "Play",
+    pause: "Pause",
+    next: "Next",
+    restart: "Restart"
+  }
+};
 
 // Multiple stories with emotion markers
 const stories = {
@@ -591,7 +610,7 @@ function App() {
                 className="flex items-center gap-2 px-4 py-2 bg-purple-500 text-white rounded-lg hover:bg-purple-600"
               >
                 <BookOpenCheck className="w-5 h-5" />
-                Choisir une histoire
+                {buttonLabels[language].chooseStory}
               </button>
               <select
                 value={language}
@@ -695,26 +714,26 @@ function App() {
               className="px-4 py-2 bg-purple-500 text-white rounded-lg hover:bg-purple-600 disabled:opacity-50"
               disabled={currentPage === 0}
             >
-              Précédent
+              {buttonLabels[language].previous}
             </button>
             <button
               onClick={() => setIsPlaying(!isPlaying)}
               className="px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600"
             >
-              {isPlaying ? 'Pause' : 'Lecture'}
+              {isPlaying ? buttonLabels[language].pause : buttonLabels[language].play}
             </button>
             <button
               onClick={handleNextPage}
               className="px-4 py-2 bg-purple-500 text-white rounded-lg hover:bg-purple-600 disabled:opacity-50"
               disabled={currentPage === stories[language][currentStory].pages.length - 1 || waitingForResponse}
             >
-              Suivant
+              {buttonLabels[language].next}
             </button>
             <button
               onClick={handleReset}
               className="px-4 py-2 bg-gray-500 text-white rounded-lg hover:bg-gray-600"
             >
-              Recommencer
+              {buttonLabels[language].restart}
             </button>
           </div>
           {showAbout && (
