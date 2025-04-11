@@ -569,7 +569,7 @@ function App() {
             {Object.entries(stories[language]).map(([key, story]) => (
               <div key={key} className="flex items-center gap-4 p-4 bg-gray-50 hover:bg-purple-50 rounded-lg">
                 <img
-                  src={`./public/portraitsHistoires/${key}.png`} // tu peux nommer les images selon la clé de l'histoire
+                  src={`/portraitsHistoires/${key}.png`} // tu peux nommer les images selon la clé de l'histoire
                   alt={story.title}
                   className="w-20 h-20 rounded-lg object-cover"
                 />
