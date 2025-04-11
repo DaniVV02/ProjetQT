@@ -385,97 +385,93 @@ const stories = {
 	}
 };
 
-function App()
-{
-	const [currentStory, setCurrentStory] = useState<StoryKey>('wolf');
-	const [currentPage, setCurrentPage] = useState(0);
-	const [isPlaying, setIsPlaying] = useState(false);
-	const [showStorySelector, setShowStorySelector] = useState(false);
-	const [waitingForResponse, setWaitingForResponse] = useState(false);
-	const [language, setLanguage] = useState<Language>('french');
-	const utteranceRef = useRef<SpeechSynthesisUtterance | null>(null);
-	
-	useEffect(
-		() => {
-			if (utteranceRef.current) {
-				window.speechSynthesis.cancel(); // Annule toujours la lecture précédente
-			}
-			
-			if (isPlaying && !waitingForResponse) {
-				const text = stories[language][currentStory].pages[currentPage].text;
-				utteranceRef.current = new SpeechSynthesisUtterance(text);
-				utteranceRef.current.lang = language === 'french' ? 'fr-FR' : 'en-US';
-				utteranceRef.current.onend = () => {
-					setCurrentPage(
-						(prev) => {
-							const nextPage = prev + 1;
-							if (nextPage < stories[language][currentStory].pages.length) {
-								if (stories[language][currentStory].pages[nextPage].emotion === 'asking') {
-									setWaitingForResponse(true);
-									setIsPlaying(false);
-								}
-								return nextPage;
-							}
-							setIsPlaying(false);
-							return prev;
-						}
-					);
-				};
-				window.speechSynthesis.speak(utteranceRef.current);
-			}
-		},
-		[isPlaying, currentStory, currentPage, waitingForResponse, language]
-	);
-	
-	const getEmotionIcon = (emotion: string) => {
-		const imageMap: Record<string, string> = {
-			happy: '/emotions/happy.png',
-			sad: '/emotions/sad.png',
-			asking: '/emotions/confus.png',
-			neutral: '/emotions/neutral.png',
-			surprised: '/emotions/surprised.png',
-			excited: '/emotions/excited.png',
-			love: '/emotions/love.png',
-			shy: '/emotions/shy.png',
-			angry: '/emotions/angry.png',
-		};
-		
-		const imageSrc = imageMap[emotion] || '/emotions/default.png';
-		
-		return <img src={imageSrc} alt={emotion} className="w-44 h-44 object-contain z-0" />;
-	};
-	
-	const handleReset = () => {
-		setCurrentPage(0);
-		setIsPlaying(false);
-		setWaitingForResponse(false);
-		if (utteranceRef.current) {
-			window.speechSynthesis.cancel();
-		}
-	};
-	
-	const handleStorySelect = (storyKey: StoryKey) => {
-		setCurrentStory(storyKey);
-		setCurrentPage(0);
-		setIsPlaying(false);
-		setShowStorySelector(false);
-		setWaitingForResponse(false);
-		if (utteranceRef.current) {
-			window.speechSynthesis.cancel();
-		}
-	};
-	
-	const handleLanguageChange = (lang: 'french' | 'english') => {
-		setLanguage(lang);
-		setCurrentPage(0);
-		setIsPlaying(false);
-		setWaitingForResponse(false);
-		if (utteranceRef.current) {
-			window.speechSynthesis.cancel();
-		}
-	};
-	
-	const handleEmojiClick = (emotion: Emotion) => {
+function App() {
+  const [currentStory, setCurrentStory] = useState<StoryKey>('wolf');
+  const [currentPage, setCurrentPage] = useState(0);
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [showStorySelector, setShowStorySelector] = useState(false);
+  const [waitingForResponse, setWaitingForResponse] = useState(false);
+  const [language, setLanguage] = useState<Language>('french');
+  const utteranceRef = useRef<SpeechSynthesisUtterance | null>(null);
+
+  useEffect(() => {
+    if (utteranceRef.current) {
+      window.speechSynthesis.cancel(); // Annule toujours la lecture précédente
+    }
+  
+    if (isPlaying && !waitingForResponse) {
+      const text = stories[language][currentStory].pages[currentPage].text;
+      utteranceRef.current = new SpeechSynthesisUtterance(text);
+      utteranceRef.current.lang = language === 'french' ? 'fr-FR' : 'en-US';
+      utteranceRef.current.onend = () => {
+        setCurrentPage((prev) => {
+          const nextPage = prev + 1;
+          if (nextPage < stories[language][currentStory].pages.length) {
+            if (stories[language][currentStory].pages[nextPage].emotion === 'asking') {
+              setWaitingForResponse(true);
+              setIsPlaying(false);
+            }
+            return nextPage;
+          }
+          setIsPlaying(false);
+          return prev;
+        });
+      };
+      window.speechSynthesis.speak(utteranceRef.current);
+    }
+  }, [isPlaying, currentStory, currentPage, waitingForResponse, language]);
+  
+
+  const getEmotionIcon = (emotion: string) => {
+    const imageMap: Record<string, string> = {
+      happy: '/emotions/happy.png',
+      sad: '/emotions/sad.png',
+      asking: '/emotions/confus.png',
+      neutral: '/emotions/neutral.png',
+      surprised: '/emotions/surprised.png',
+      excited: '/emotions/excited.png',
+      love: '/emotions/love.png',
+      shy: '/emotions/shy.png',
+      angry: '/emotions/angry.png',
+    };
+
+    const imageSrc = imageMap[emotion] || '/emotions/default.png';
+  
+    return <img src={imageSrc} alt={emotion} className="w-44 h-44 object-contain z-0" />;
+  };
+  
+
+  const handleReset = () => {
+    setCurrentPage(0);
+    setIsPlaying(false);
+    setWaitingForResponse(false);
+    if (utteranceRef.current) {
+      window.speechSynthesis.cancel();
+    }
+  };
+
+  const handleStorySelect = (storyKey: StoryKey) => {
+    setCurrentStory(storyKey);
+    setCurrentPage(0);
+    setIsPlaying(false);
+    setShowStorySelector(false);
+    setWaitingForResponse(false);
+    if (utteranceRef.current) {
+      window.speechSynthesis.cancel();
+    }
+  };
+
+  const handleLanguageChange = (lang: 'french' | 'english') => {
+    setLanguage(lang);
+    setCurrentPage(0);
+    setIsPlaying(false);
+    setWaitingForResponse(false);
+    if (utteranceRef.current) {
+      window.speechSynthesis.cancel();
+    }
+  };
+
+  	const handleEmojiClick = (emotion: Emotion) => {
 		var responseTexts: Record<Emotion, string> = null;
 		
 		if(language == 'french')
@@ -515,202 +511,206 @@ function App()
 		setCurrentPage((prev) => prev + 1);
 		setIsPlaying(true);
 	};
-	
-	const handleNextPage = () => {
-		if (utteranceRef.current) {
-			window.speechSynthesis.cancel();
-		}
-		
-		const nextPage = currentPage + 1;
-		const nextEmotion = stories[language][currentStory].pages[nextPage]?.emotion;
-		
-		// Si la prochaine page demande une réponse, on bloque
-		if (nextEmotion === 'asking') {
-			setCurrentPage(nextPage);
-			setIsPlaying(false);
-			setWaitingForResponse(true);
-		} else {
-			setCurrentPage((prev) => Math.min(prev + 1, stories[language][currentStory].pages.length - 1));
-			setIsPlaying(true);
-		}
-	};
-	
-	const handlePreviousPage = () => {
-		if (utteranceRef.current) {
-			window.speechSynthesis.cancel();
-		}
-		
-		let targetPage = currentPage - 2;
-		
-		// Ne pas retourner sur une page de type 'asking'
-		while (targetPage >= 0 && stories[language][currentStory].pages[targetPage].emotion === 'asking') {
-			targetPage--;
-		}
-		
-		if (targetPage >= 0) {
-			setCurrentPage((prev) => Math.max(prev - 1, 0));
-			setIsPlaying(true);
-		}
-	};
-	
-	return (
-		<div className="min-h-screen bg-gradient-to-b from-blue-100 to-purple-100 p-8">
-		<div className="max-w-2xl mx-auto">
-		<div className="bg-white rounded-2xl shadow-xl p-8 mb-8">
-		<div className="flex justify-between items-center mb-8">
-			<h1 className="text-3xl font-bold text-center text-purple-600 flex items-center gap-2">
-			<BookOpen className="w-8 h-8" />
-			QT Robot Storyteller
-			</h1>
-			<div className="flex gap-4">
-				<button
-				onClick={() => setShowStorySelector(!showStorySelector)}
-				className="flex items-center gap-2 px-4 py-2 bg-purple-500 text-white rounded-lg hover:bg-purple-600"
-				>
-				<BookOpenCheck className="w-5 h-5" />
-				Choisir une histoire
-				</button>
-				<select
-				value={language}
-				onChange={(e) => handleLanguageChange(e.target.value as 'french' | 'english')}
-				className="px-4 py-2 bg-gray-200 text-gray-800 rounded-lg"
-				>
-				<option value="french">Français</option>
-				<option value="english">English</option>
-				</select>
-			</div>
-		</div>
-		
-		{showStorySelector && (
-		<div className="mb-8 grid grid-cols-1 gap-4">
-		{Object.entries(stories[language]).map(([key, story]) => (
-			<div key={key} className="flex items-center gap-4 p-4 bg-gray-50 hover:bg-purple-50 rounded-lg">
-				<img
-				  src={`./public/portraitsHistoires/${key}.png`} // tu peux nommer les images selon la clé de l'histoire
-				  alt={story.title}
-				  className="w-20 h-20 rounded-lg object-cover"
-				/>
-				<div className="flex flex-col flex-1">
-					<h3 className="font-semibold text-lg text-purple-700">{story.title}</h3>
-					<p className="text-gray-600 text-sm">{story.pages[0].text}</p>
-				</div>
-				<div className="flex flex-col gap-2">
-					<button
-					onClick={() => {
-					handleLanguageChange('french');
-					handleStorySelect(key as StoryKey);
-					}}
-					className="text-sm px-2 py-1 bg-purple-300 text-white rounded"
-					>
-					🇫🇷 Français
-					</button>
-					<button
-					onClick={() => {
-					handleLanguageChange('english');
-					handleStorySelect(key as StoryKey);
-					}}
-					className="text-sm px-2 py-1 bg-blue-300 text-white rounded"
-					>
-					🇬🇧 English
-					</button>
-				</div>
-			</div>
-		))}
-		</div>
-		
-		)}
-		
-		<div className="flex flex-col items-center mb-8">
-		<div className="relative w-60 h-60 mb-6">
-		<img
-		src="/emotions/teteQT.png" // image de fond circulaire ou décorative
-		alt="cadre"
-		className="absolute inset-0 w-full h-full object-contain z-10"
-		/>
-		<div className="absolute inset-0 flex items-center justify-center mt-6">
-		{getEmotionIcon(stories[language][currentStory].pages[currentPage].emotion)}
-		</div>
-		</div>
-		
-		<div className="text-xl text-center font-medium text-gray-700 min-h-[4rem]">
-		{stories[language][currentStory].pages[currentPage].text}
-		</div>
-		</div>
-		
-		{waitingForResponse && (
-		<div className="flex justify-center gap-4 mb-8">
-		<button onClick={() => handleEmojiClick('happy')} className="p-4 rounded-full bg-yellow-200">
-		<Smile className="w-8 h-8" />
-		</button>
-		<button onClick={() => handleEmojiClick('sad')} className="p-4 rounded-full bg-blue-200">
-		<Frown className="w-8 h-8" />
-		</button>
-		<button onClick={() => handleEmojiClick('love')} className="p-4 rounded-full bg-red-200">
-		<Heart className="w-8 h-8" />
-		</button>
-		<button onClick={() => handleEmojiClick('angry')} className="p-4 rounded-full bg-orange-200">
-		<Angry className="w-8 h-8" />
-		</button>
-		<button onClick={() => handleEmojiClick('surprised')} className="p-4 rounded-full bg-purple-200">
-		<Meh className="w-8 h-8" />
-		</button>
-		<button onClick={() => handleEmojiClick('excited')} className="p-4 rounded-full bg-green-200">
-		<Smile className="w-8 h-8" />
-		</button>
-		<button onClick={() => handleEmojiClick('shy')} className="p-4 rounded-full bg-pink-200">
-		<Smile className="w-8 h-8" />
-		</button>
-		<button onClick={() => handleEmojiClick('neutral')} className="p-4 rounded-full bg-gray-200">
-		<Smile className="w-8 h-8" />
-		</button>
-		</div>
-		)}
-		
-		<div className="flex justify-center gap-4">
-		<button
-		onClick={handlePreviousPage}
-		className="px-4 py-2 bg-purple-500 text-white rounded-lg hover:bg-purple-600 disabled:opacity-50"
-		disabled={currentPage === 0}
-		>
-		Précédent
-		</button>
-		<button
-		onClick={() => setIsPlaying(!isPlaying)}
-		className="px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600"
-		>
-		{isPlaying ? 'Pause' : 'Lecture'}
-		</button>
-		<button
-		onClick={handleNextPage}
-		className="px-4 py-2 bg-purple-500 text-white rounded-lg hover:bg-purple-600 disabled:opacity-50"
-		disabled={currentPage === stories[language][currentStory].pages.length - 1 || waitingForResponse}
-		>
-		Suivant
-		</button>
-		<button
-		onClick={handleReset}
-		className="px-4 py-2 bg-gray-500 text-white rounded-lg hover:bg-gray-600"
-		>
-		Recommencer
-		</button>
-		</div>
-		</div>
-		
-		<div className="bg-white rounded-2xl shadow-xl p-8">
-		<h2 className="text-xl font-semibold mb-4 text-purple-600">À propos du projet</h2>
-		<p className="text-gray-700 mb-4">
-		Cette interface simule le comportement du QT Robot lors de la narration d'histoires.
-		Le robot affiche différentes expressions faciales en fonction du contexte de l'histoire,
-		créant ainsi une expérience interactive et engageante pour les enfants de 3-4 ans.
-		</p>
-		<p className="text-gray-700">
-		Dans la version finale sur le robot physique, l'interface utilisera la synthèse vocale
-		et pourra éventuellement analyser les réactions de l'enfant pour adapter la narration.
-		</p>
-		</div>
-		</div>
-		</div>
-	);
+
+  const handleNextPage = () => {
+    if (utteranceRef.current) {
+      window.speechSynthesis.cancel();
+    }
+  
+    const nextPage = currentPage + 1;
+    const nextEmotion = stories[language][currentStory].pages[nextPage]?.emotion;
+  
+    // Si la prochaine page demande une réponse, on bloque
+    if (nextEmotion === 'asking') {
+      setCurrentPage(nextPage);
+      setIsPlaying(false);
+      setWaitingForResponse(true);
+
+
+    } else {
+      setCurrentPage((prev) => Math.min(prev + 1, stories[language][currentStory].pages.length - 1));
+      setIsPlaying(true);
+    }
+  };
+  
+
+  const handlePreviousPage = () => {
+    if (utteranceRef.current) {
+      window.speechSynthesis.cancel();
+    }
+
+    let targetPage = currentPage - 2;
+
+  // Ne pas retourner sur une page de type 'asking'
+  while (targetPage >= 0 && stories[language][currentStory].pages[targetPage].emotion === 'asking') {
+    targetPage--;
+  }
+
+  if (targetPage >= 0) {
+    setCurrentPage((prev) => Math.max(prev - 1, 0));
+    setIsPlaying(true);
+  }
+    
+  };
+
+  return (
+    <div className="min-h-screen bg-gradient-to-b from-blue-100 to-purple-100 p-8">
+      <div className="max-w-2xl mx-auto">
+        <div className="bg-white rounded-2xl shadow-xl p-8 mb-8">
+          <div className="flex justify-between items-center mb-8">
+            <h1 className="text-3xl font-bold text-center text-purple-600 flex items-center gap-2">
+              <BookOpen className="w-8 h-8" />
+              QT Robot Storyteller
+            </h1>
+            <div className="flex gap-4">
+              <button
+                onClick={() => setShowStorySelector(!showStorySelector)}
+                className="flex items-center gap-2 px-4 py-2 bg-purple-500 text-white rounded-lg hover:bg-purple-600"
+              >
+                <BookOpenCheck className="w-5 h-5" />
+                Choisir une histoire
+              </button>
+              <select
+                value={language}
+                onChange={(e) => handleLanguageChange(e.target.value as 'french' | 'english')}
+                className="px-4 py-2 bg-gray-200 text-gray-800 rounded-lg"
+              >
+                <option value="french">Français</option>
+                <option value="english">English</option>
+              </select>
+            </div>
+          </div>
+
+          {showStorySelector && (
+            <div className="mb-8 grid grid-cols-1 gap-4">
+            {Object.entries(stories[language]).map(([key, story]) => (
+              <div key={key} className="flex items-center gap-4 p-4 bg-gray-50 hover:bg-purple-50 rounded-lg">
+                <img
+                  src={`/portraitsHistoires/${key}.png`} // tu peux nommer les images selon la clé de l'histoire
+                  alt={story.title}
+                  className="w-20 h-20 rounded-lg object-cover"
+                />
+                <div className="flex flex-col flex-1">
+                  <h3 className="font-semibold text-lg text-purple-700">{story.title}</h3>
+                  <p className="text-gray-600 text-sm">{story.pages[0].text}</p>
+                </div>
+                <div className="flex flex-col gap-2">
+                  <button
+                    onClick={() => {
+                      handleLanguageChange('french');
+                      handleStorySelect(key as StoryKey);
+                    }}
+                    className="text-sm px-2 py-1 bg-purple-300 text-white rounded"
+                  >
+                    🇫🇷 Français
+                  </button>
+                  <button
+                    onClick={() => {
+                      handleLanguageChange('english');
+                      handleStorySelect(key as StoryKey);
+                    }}
+                    className="text-sm px-2 py-1 bg-blue-300 text-white rounded"
+                  >
+                    🇬🇧 English
+                  </button>
+                </div>
+              </div>
+            ))}
+          </div>
+          
+          )}
+
+          <div className="flex flex-col items-center mb-8">
+          <div className="relative w-60 h-60 mb-6">
+            <img
+              src="/emotions/teteQT.png" // image de fond circulaire ou décorative
+              alt="cadre"
+              className="absolute inset-0 w-full h-full object-contain z-10"
+            />
+            <div className="absolute inset-0 flex items-center justify-center mt-6">
+              {getEmotionIcon(stories[language][currentStory].pages[currentPage].emotion)}
+            </div>
+          </div>
+
+            <div className="text-xl text-center font-medium text-gray-700 min-h-[4rem]">
+              {stories[language][currentStory].pages[currentPage].text}
+            </div>
+          </div>
+
+          {waitingForResponse && (
+            <div className="flex justify-center gap-4 mb-8">
+              <button onClick={() => handleEmojiClick('happy')} className="p-4 rounded-full bg-yellow-200">
+                <Smile className="w-8 h-8" />
+              </button>
+              <button onClick={() => handleEmojiClick('sad')} className="p-4 rounded-full bg-blue-200">
+                <Frown className="w-8 h-8" />
+              </button>
+              <button onClick={() => handleEmojiClick('love')} className="p-4 rounded-full bg-red-200">
+                <Heart className="w-8 h-8" />
+              </button>
+              <button onClick={() => handleEmojiClick('angry')} className="p-4 rounded-full bg-orange-200">
+                <Angry className="w-8 h-8" />
+              </button>
+              <button onClick={() => handleEmojiClick('surprised')} className="p-4 rounded-full bg-purple-200">
+                <Meh className="w-8 h-8" />
+              </button>
+              <button onClick={() => handleEmojiClick('excited')} className="p-4 rounded-full bg-green-200">
+                <Smile className="w-8 h-8" />
+              </button>
+              <button onClick={() => handleEmojiClick('shy')} className="p-4 rounded-full bg-pink-200">
+                <Smile className="w-8 h-8" />
+              </button>
+              <button onClick={() => handleEmojiClick('neutral')} className="p-4 rounded-full bg-gray-200">
+                <Smile className="w-8 h-8" />
+              </button>
+            </div>
+          )}
+
+          <div className="flex justify-center gap-4">
+            <button
+              onClick={handlePreviousPage}
+              className="px-4 py-2 bg-purple-500 text-white rounded-lg hover:bg-purple-600 disabled:opacity-50"
+              disabled={currentPage === 0}
+            >
+              Précédent
+            </button>
+            <button
+              onClick={() => setIsPlaying(!isPlaying)}
+              className="px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600"
+            >
+              {isPlaying ? 'Pause' : 'Lecture'}
+            </button>
+            <button
+              onClick={handleNextPage}
+              className="px-4 py-2 bg-purple-500 text-white rounded-lg hover:bg-purple-600 disabled:opacity-50"
+              disabled={currentPage === stories[language][currentStory].pages.length - 1 || waitingForResponse}
+            >
+              Suivant
+            </button>
+            <button
+              onClick={handleReset}
+              className="px-4 py-2 bg-gray-500 text-white rounded-lg hover:bg-gray-600"
+            >
+              Recommencer
+            </button>
+          </div>
+        </div>
+
+        <div className="bg-white rounded-2xl shadow-xl p-8">
+          <h2 className="text-xl font-semibold mb-4 text-purple-600">À propos du projet</h2>
+          <p className="text-gray-700 mb-4">
+            Cette interface simule le comportement du QT Robot lors de la narration d'histoires.
+            Le robot affiche différentes expressions faciales en fonction du contexte de l'histoire,
+            créant ainsi une expérience interactive et engageante pour les enfants de 3-4 ans.
+          </p>
+          <p className="text-gray-700">
+            Dans la version finale sur le robot physique, l'interface utilisera la synthèse vocale
+            et pourra éventuellement analyser les réactions de l'enfant pour adapter la narration.
+          </p>
+        </div>
+      </div>
+    </div>
+  );
 }
 
 export default App;
