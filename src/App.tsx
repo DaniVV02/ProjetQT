@@ -7,7 +7,7 @@ type Language = 'french' | 'english';
 
 
 // Define the type for emotions
-type Emotion = 'happy' | 'sad' | 'love' | 'angry' | 'excited' | 'neutral' | 'surprised' | 'shy';
+type Emotion = 'happy' | 'sad' | 'love' | 'angry' | 'excited' | 'neutral';
 
 // Multiple stories with emotion markers
 const stories = {
@@ -20,7 +20,7 @@ const stories = {
         { text: "Ainsi, quand Loup était d'humeur joyeuse, il sifflotait, le cœur léger, faisait des blagues, parlait aux arbres… Il était plein d'énergie et débordait d'idées pour s'amuser !", emotion: "happy" },
         { text: "Cependant, si quelque chose le contrariait… Ah ! Il se renfrognait, explosait, et envoyait tout le monde balader !", emotion: "angry" },
         { text: "— Tu dois apprendre à te calmer, Loup, lui dit un jour Maître Hibou, excédé. Tu nous donnes le tournis !", emotion: "angry" },
-        { text: "— Apprendre à me calmer ? Mais pourquoi ? demanda Loup.", emotion: "asking" },
+        { text: "— Apprendre à me calmer ? Mais pourquoi ? demanda Loup.", emotion: "neutral" },
         { text: "— Pour être plus serein ! Mais ne t'inquiète pas, nous allons t'aider… On commence demain !", emotion: "happy" },
         { text: "Comment te sens-tu quand tu es en colère ?", emotion: "asking" },
         { text: "", emotion: "response" },
@@ -56,7 +56,7 @@ const stories = {
         { text: "— Mais, qu'est-ce qui arrive à mon super copain ? fit alors une voix derrière lui.", emotion: "neutral" },
         { text: "C'était Demoiselle Yéti. Elle lui fit un gros câlin, puis elle dit :", emotion: "love" },
         { text: "— Ce qui est fait est fait. Maintenant, il faut réparer ta bêtise ! Va voir Gros Louis et Louve, et excuse-toi. Tu te sentiras beaucoup mieux après.", emotion: "happy" },
-        { text: "— Et si Louve ne veut pas me pardonner ? fit Loup, inquiet.", emotion: "asking" },
+        { text: "— Et si Louve ne veut pas me pardonner ? fit Loup, inquiet.", emotion: "neutral" },
         { text: "— Qui ne tente rien n'a rien, répondit Demoiselle Yéti. Allez, file !", emotion: "happy" },
         { text: "Tout honteux, Loup retourna frapper à la porte de Gros Louis.", emotion: "sad" },
         { text: "— Je vous demande pardon, les amis, fit-il. Je ne pensais pas ce que j'ai dit. Ce n'était pas gentil.", emotion: "sad" },
@@ -206,7 +206,7 @@ const stories = {
         { text: "When Wolf was in a joyful mood, he whistled with a light heart, cracked jokes, talked to the trees... He was bursting with energy and full of fun ideas!", emotion: "happy" },
         { text: "However, if something upset him… Oh no! He would frown, explode, and send everyone away!", emotion: "angry" },
         { text: "— You need to learn to calm down, Wolf, said Master Owl one day, exasperated. You're making us dizzy!", emotion: "angry" },
-        { text: "— Learn to calm down? But why? asked Wolf.", emotion: "asking" },
+        { text: "— Learn to calm down? But why? asked Wolf.", emotion: "neutral" },
         { text: "— To be more peaceful! But don't worry, we'll help you… We start tomorrow!", emotion: "happy" },
         { text: "How do you feel when you're angry?", emotion: "asking" },
         { text: "", emotion: "response" },
@@ -242,7 +242,7 @@ const stories = {
         { text: "— Hey, what's wrong with my awesome buddy? came a voice behind him.", emotion: "neutral" },
         { text: "It was Miss Yeti. She gave him a big hug, then said:", emotion: "love" },
         { text: "— What's done is done. Now you have to fix your mistake! Go see Big Louie and Lona and apologize. You'll feel so much better afterward.", emotion: "happy" },
-        { text: "— But what if Lona doesn't forgive me? asked Wolf, worried.", emotion: "asking" },
+        { text: "— But what if Lona doesn't forgive me? asked Wolf, worried.", emotion: "neutral" },
         { text: "— Nothing ventured, nothing gained, replied Miss Yeti. Go on now!", emotion: "happy" },
         { text: "Feeling ashamed, Wolf went back and knocked on Big Louie's door.", emotion: "sad" },
         { text: "— I'm sorry, my friends, he said. I didn't mean what I said. It wasn't kind.", emotion: "sad" },
@@ -258,10 +258,10 @@ const stories = {
         { text: "But Grizou had a big problem: he was very fearful. He was afraid of everything! Noises, shadows, clouds... everything scared him.", emotion: "sad" },
         { text: "When Grizou heard a strange noise, he hid under the couch and trembled with fear.", emotion: "sad" },
         { text: "One day, Grizou saw a shadow pass near the window. He jumped and took refuge under the table, his heart pounding.", emotion: "sad" },
-        { text: "— Grizou, why are you afraid? asked his friend, the kind dog Max, as he approached.", emotion: "asking" },
+        { text: "— Grizou, why are you afraid? asked his friend, the kind dog Max, as he approached.", emotion: "neutral" },
         { text: "— I saw a shadow, I think it's a monster! replied Grizou, trembling.", emotion: "sad" },
         { text: "— Oh, but it's nothing, it's just a tree moving in the wind! said Max, laughing.", emotion: "happy" },
-        { text: "— A tree? Really? asked Grizou, uncertain.", emotion: "asking" },
+        { text: "— A tree? Really? asked Grizou, uncertain.", emotion: "neutral" },
         { text: "— Yes! And to show you there's nothing to fear, come with me, let's explore!", emotion: "excited" },
         { text: "Grizou followed Max outside, curling up into himself. But the more he walked, the more excited he felt.", emotion: "sad" },
         { text: "— Look, Grizou, it's just a branch moving in the wind, explained Max, pointing to a tree.", emotion: "happy" },
@@ -482,8 +482,7 @@ function App() {
 				sad: "Ne sois pas triste, je suis là pour toi!",
 				angry: "Calme-toi, tout ira bien!",
 				love: "Moi aussi, je t'aime beaucoup!",
-				surprised: "Oh, vraiment? C'est incroyable!",
-				shy: "Ne sois pas timide, je suis là avec toi!",      excited: "Super! J'adore ton enthousiasme!",
+        excited: "Super! J'adore ton enthousiasme!",
 				neutral: "D'accord, je comprends.",
 			};
 		}
@@ -494,8 +493,6 @@ function App() {
 				sad: "Don't be sad, I'm here for you!",
 				angry: "Calm down, everything will be fine!",
 				love: "I love you too!",
-				surprised: "Oh, really? That's amazing!",
-				shy: "Don't be shy, I'm here with you!",
 				excited: "Super! I love your enthusiasm!",
 				neutral: "OK, I understand.",
 			};
