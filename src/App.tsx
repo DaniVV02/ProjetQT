@@ -385,6 +385,20 @@ const stories = {
 	}
 };
 
+// About text content in both languages
+const aboutContent = {
+  french: {
+    title: "À propos du projet",
+    description1: "Cette interface simule le comportement du QT Robot lors de la narration d'histoires. Le robot affiche différentes expressions faciales en fonction du contexte de l'histoire, créant ainsi une expérience interactive et engageante pour les enfants de 3-4 ans.",
+    description2: "Dans la version finale sur le robot physique, l'interface utilisera la synthèse vocale et pourra éventuellement analyser les réactions de l'enfant pour adapter la narration."
+  },
+  english: {
+    title: "About the Project",
+    description1: "This interface simulates QT Robot's behavior during storytelling. The robot displays different facial expressions based on the story context, creating an interactive and engaging experience for children aged 3-4.",
+    description2: "In the final version on the physical robot, the interface will use voice synthesis and may eventually analyze the child's reactions to adapt the narration."
+  }
+};
+
 function App() {
   const [currentStory, setCurrentStory] = useState<StoryKey>('wolf');
   const [currentPage, setCurrentPage] = useState(0);
@@ -705,15 +719,14 @@ function App() {
           </div>
           {showAbout && (
             <div className="mt-8 border-t pt-8">
-              <h2 className="text-xl font-semibold mb-4 text-purple-600">À propos du projet</h2>
+              <h2 className="text-xl font-semibold mb-4 text-purple-600">
+                {aboutContent[language].title}
+              </h2>
               <p className="text-gray-700 mb-4">
-                Cette interface simule le comportement du QT Robot lors de la narration d'histoires.
-                Le robot affiche différentes expressions faciales en fonction du contexte de l'histoire,
-                créant ainsi une expérience interactive et engageante pour les enfants de 3-4 ans.
+                {aboutContent[language].description1}
               </p>
               <p className="text-gray-700">
-                Dans la version finale sur le robot physique, l'interface utilisera la synthèse vocale
-                et pourra éventuellement analyser les réactions de l'enfant pour adapter la narration.
+                {aboutContent[language].description2}
               </p>
             </div>
           )}
