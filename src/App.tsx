@@ -529,7 +529,7 @@ function App() {
 
     const imageSrc = imageMap[emotion] || '/emotions/default.png';
 
-    return <img src={imageSrc} alt={emotion} className="w-44 h-44 object-contain z-0" />;
+    return <img src={imageSrc} alt={emotion} className="w-36 h-36 md:w-44 md:h-44 object-contain z-0" />;
   };
 
   const handleReset = () => {
