@@ -15,7 +15,8 @@
     * [Installer les dépendances du projet](#installer-les-dépendances-du-projet)
     * [Démarrer le projet](#démarrer-le-projet)
    
-* [Déploiement du projet sur Vercel](#deploy-projet)  
+* [Déploiement du projet sur Vercel](#deploy-projet)
+* [Générer un QR Code](#qr-code)
 
 # Équipe
 Projet développé par :
@@ -122,7 +123,7 @@ npm run dev
 #### Accéder au projet :
 Ouvrez votre navigateur web et allez à l'adresse suivante : [http://localhost:5173/](http://localhost:5173/).
 
-## Déploiement du projet sur Vercel <a id="deploy-projet"></a>
+# Déploiement du projet sur Vercel <a id="deploy-projet"></a>
 
 Le projet **ProjetQT** est déployé automatiquement en ligne grâce à [Vercel](https://vercel.com/), une plateforme de déploiement rapide et gratuite pour les applications front-end.
 
@@ -159,7 +160,7 @@ Le projet **ProjetQT** est déployé automatiquement en ligne grâce à [Vercel]
    - **Install Command** : `npm install`
    - **Development Command** : vite
 
-  Puis cliquez sur **Save**
+   Puis cliquez sur **Save**
 
 7. **Lancer le déploiement**  
    Cliquez sur **Deploy**. En quelques secondes, votre projet sera disponible en ligne à l’adresse :  
@@ -172,10 +173,24 @@ Le projet **ProjetQT** est déployé automatiquement en ligne grâce à [Vercel]
 
 https://projet-qt.vercel.app/
 
+Votre projet est maintenant en ligne grâce à **Vercel**. Si vous souhaitez personnaliser l’URL ou gérer des environnements, explorez les paramètres du projet sur [Vercel](https://vercel.com/dashboard).
+
+# Générer un QR Code
+
+- Allez sur le site : `https://www.qr.io/`
+- Insérez l'URL du site
+- Décorez votre QR Code (ou pas)
+- Puis cliquez sur **Download QR Code**
+- Saisissez finalement une adresse e-mail valide pour recevoir votre QR Code
+
+Vous avez accès maintenant à un tableau de bord personnalisé pour visualiser votre QR Code, ainsi que contrôler les activités associées à celui-ci.
+
+
+#### Notre QR Code :
+
+![QR Code QT](QRCodeQT.png)
+
+
+
 ---
-
-Félicitations ! Votre projet est maintenant en ligne grâce à **Vercel**. Si vous souhaitez personnaliser l’URL ou gérer des environnements, explorez les paramètres du projet sur [Vercel](https://vercel.com/dashboard).
-
-
----
-Félicitations ! Vous avez réussi à installer et démarrer le projet **ProjetQT**. Si vous avez des questions ou rencontrez des problèmes, n'hésitez pas à demander de l'aide !
+Félicitations ! Vous avez réussi à installer, déployer et démarrer le projet **ProjetQT**. Si vous avez des questions ou rencontrez des problèmes, n'hésitez pas à demander de l'aide !
