@@ -451,16 +451,18 @@ const stories = {
 // About text content in both languages
 const aboutContent = {
   french: {
-    title: "À propos du projet",
-    description1: "Cette interface simule le comportement du QT Robot lors de la narration d'histoires. Le robot affiche différentes expressions faciales en fonction du contexte de l'histoire, créant ainsi une expérience interactive et engageante pour les enfants de 3-4 ans.",
-    description2: "Dans une potentielle version finale sur le robot physique, l'interface utilisera la synthèse vocale et pourra éventuellement analyser les réactions de l'enfant pour adapter la narration."
+    title: "Comment ça marche ?",
+    description1: "Bienvenue sur ce site ! Ici, tu peux choisir une histoire en cliquant sur « Choisir une histoire ». Chaque histoire est lue par ton ami QT le robot.",
+    description2: "QT change d’expression selon ce qui se passe. Tu peux aussi lui répondre avec des petits emojis. Amuse-toi bien !"
   },
   english: {
-    title: "About the Project",
-    description1: "This interface simulates QT Robot's behavior during storytelling. The robot displays different facial expressions based on the story context, creating an interactive and engaging experience for children aged 3-4.",
-    description2: "In a potential final version on the physical robot, the interface will use voice synthesis and may eventually analyze the child's reactions to adapt the narration."
+    title: "How does it work?",
+    description1: "Welcome to this site! Here, you can pick a story by clicking on 'Choose a story'. Each story is told by your robot friend QT.",
+    description2: "QT changes his face depending on the story. You can also answer with little emojis. Have fun!"
   }
 };
+
+
 
 function App() {
   const [isWelcome, setIsWelcome] = useState(true);
@@ -473,6 +475,8 @@ function App() {
   const [showAbout, setShowAbout] = useState(false);
   const utteranceRef = useRef<SpeechSynthesisUtterance | null>(null);
   const [hasStoryStarted, setHasStoryStarted] = useState(false);
+  const [showAboutHint, setShowAboutHint] = useState(true);
+
 
 
   useEffect(() => {
@@ -699,6 +703,7 @@ function App() {
           setIsWelcome(false);
           setShowStorySelector(true); 
           setIsPlaying(false); 
+          setShowAboutHint(true)
         }}
         className="px-6 py-3 bg-purple-500 text-white rounded-xl hover:bg-purple-600 text-lg"
         >
@@ -715,13 +720,35 @@ function App() {
           <div className="bg-white rounded-2xl shadow-xl p-6 md:p-8 mb-8">
             <div className="flex flex-col md:flex-row justify-between items-center mb-8">
               <div className="flex items-center gap-4 mb-4 md:mb-0">
+                <div className="relative flex items-center justify-center w-12 h-12">
                 <button
-                  onClick={() => setShowAbout(!showAbout)}
+                  onClick={() => {
+                    setShowAbout(!showAbout);
+                    setShowAboutHint(false); 
+                  }}
                   className="text-purple-600 hover:text-purple-800 transition-colors"
                   aria-label="Afficher les informations"
                 >
                   <Info className="w-8 h-8" />
                 </button>
+
+                {showAboutHint && (
+                <div className="absolute bottom-full mb-2 left-1/2 -translate-x-1/2 bg-blue-200 text-white-800 px-3 py-2 rounded-xl shadow-lg w-56 z-30 text-sm font-medium text-center">
+                  <img
+                    src={`/emotions/qt.png`}
+                    alt="QT robot"
+                    className="w-14 h-14 rounded-full object-cover mx-auto mb-1"
+                  />
+                  {language === 'french'
+                        ? "Clique ici pour savoir comment utiliser le site !"
+                        : "Click here to learn how to use the site!"
+                      }                  
+                  <div className="absolute top-full left-1/2 -translate-x-1/2 w-0 h-0 border-l-8 border-r-8 border-t-8 border-l-transparent border-r-transparent border-t-blue-200" />
+                </div>
+              )}
+
+              </div>
+
                 <div className="flex items-center gap-4">
                 {currentStory && !showStorySelector &&(
                   <img
@@ -943,23 +970,29 @@ function App() {
                     {buttonLabels[language].restart}
                   </button>
                 </div>
-    
-                {/* À PROPOS */}
-                {showAbout && (
-                  <div className="mt-8 border-t pt-8">
+              </>
+            )}
+            {/* À PROPOS */}
+            {showAbout && (
+                <div className="mt-8 border-t pt-8 flex flex-col md:flex-row items-start gap-8">
+                  <div className="flex-1">
                     <h2 className="text-xl font-semibold mb-4 text-purple-600">
                       {aboutContent[language].title}
                     </h2>
                     <p className="text-gray-700 mb-4">
                       {aboutContent[language].description1}
                     </p>
-                    <p className="text-gray-700">
-                      {aboutContent[language].description2}
-                    </p>
+                    <p className="text-gray-700">{aboutContent[language].description2}</p>
                   </div>
-                )}
-              </>
-            )}
+                  <div className="w-full md:w-1/3 flex justify-center">
+                    <img
+                      src="/emotions/qt_line_up.png"
+                      alt="QT robot"
+                      className="w-61 h-61 object-contain"
+                    />
+                  </div>
+                </div>
+              )}
           </div>
         </div>
       </div>
