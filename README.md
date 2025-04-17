@@ -175,10 +175,10 @@ https://projet-qt.vercel.app/
 
 Votre projet est maintenant en ligne grâce à **Vercel**. Si vous souhaitez personnaliser l’URL ou gérer des environnements, explorez les paramètres du projet sur [Vercel](https://vercel.com/dashboard).
 
-# Générer un QR Code
+# Générer un QR Code <a id="qr-code"></a>
 
 - Allez sur le site : `https://www.qr.io/`
-- Insérez l'URL du site
+- Insérez l'URL du site déployé : `https://projet-qt.vercel.app/`
 - Décorez votre QR Code (ou pas)
 - Puis cliquez sur **Download QR Code**
 - Saisissez finalement une adresse e-mail valide pour recevoir votre QR Code
@@ -188,7 +188,7 @@ Vous avez accès maintenant à un tableau de bord personnalisé pour visualiser 
 
 #### Notre QR Code :
 
-![QR Code QT](QRCodeQT.png)
+<img src="QRCodeQT.png" alt="Qr Code QT" width="400">
 
 
 
