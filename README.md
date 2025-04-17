@@ -14,6 +14,8 @@
     * [Extraire le fichier ZIP](#extraire-le-fichier-zip)
     * [Installer les dépendances du projet](#installer-les-dépendances-du-projet)
     * [Démarrer le projet](#démarrer-le-projet)
+   
+* [Déploiement du projet sur Vercel](#deploy-projet)  
 
 # Équipe
 Projet développé par :
@@ -120,5 +122,60 @@ npm run dev
 #### Accéder au projet :
 Ouvrez votre navigateur web et allez à l'adresse suivante : [http://localhost:5173/](http://localhost:5173/).
 
+## Déploiement du projet sur Vercel <a id="deploy-projet"></a>
+
+Le projet **ProjetQT** est déployé automatiquement en ligne grâce à [Vercel](https://vercel.com/), une plateforme de déploiement rapide et gratuite pour les applications front-end.
+
+### Étapes de déploiement
+
+1. **Pousser le projet sur GitHub**  
+   Le projet doit être hébergé sur un dépôt GitHub (ce qui est déjà le cas ici).
+   Si ce n'est pas déjà fait :
+   ```sh
+   git init
+   git add .
+   git commit -m "initial commit"
+   git remote add origin https://github.com/ton-utilisateur/ton-projet.git
+   git push -u origin main
+   ```
+
+
+3. **Créer un compte Vercel**  
+   Rendez-vous sur [https://vercel.com](https://vercel.com) et connectez-vous avec votre compte GitHub.
+
+4. **Importer le projet**
+   - Cliquez sur **"Add New Project"**.
+   - Sélectionnez le dépôt GitHub `ProjetQT`.
+   - Vercel détectera automatiquement le framework utilisé (ici **Vite + React**).
+   - Cliquez sur "Import"
+
+
+5. **Configurer le projet**  
+   Les paramètres sont généralement détectés automatiquement, mais en cas de besoin, dans **Project Settings** - **Build and Deployment** :
+
+   - **Framework Preset** : `Vite`
+   - **Build Command** : `npm run build`
+   - **Output Directory** : dist
+   - **Install Command** : `npm install`
+   - **Development Command** : vite
+
+  Puis cliquez sur **Save**
+
+7. **Lancer le déploiement**  
+   Cliquez sur **Deploy**. En quelques secondes, votre projet sera disponible en ligne à l’adresse :  
+    `https://nom-du-projet.vercel.app`
+
+8. **Déploiement continu**  
+   À chaque fois que vous poussez des modifications sur GitHub (`git push`) sur la branche **main**, Vercel met automatiquement à jour la version en ligne du projet.
+
+#### Lien de notre projet déployé : 
+
+https://projet-qt.vercel.app/
+
 ---
-Félicitations ! Vous avez réussi à installer et démarrer le projet **ProjetQT**. 🚀 Si vous avez des questions ou rencontrez des problèmes, n'hésitez pas à demander de l'aide !
+
+Félicitations ! Votre projet est maintenant en ligne grâce à **Vercel**. Si vous souhaitez personnaliser l’URL ou gérer des environnements, explorez les paramètres du projet sur [Vercel](https://vercel.com/dashboard).
+
+
+---
+Félicitations ! Vous avez réussi à installer et démarrer le projet **ProjetQT**. Si vous avez des questions ou rencontrez des problèmes, n'hésitez pas à demander de l'aide !
