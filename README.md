@@ -188,8 +188,9 @@ Vous avez accès maintenant à un tableau de bord personnalisé pour visualiser 
 
 #### Notre QR Code :
 
-<img src="QRCodeQT.png" alt="Qr Code QT" width="400">
-
+<p align="center">
+<img src="QRCodeQT.png" alt="Qr Code QT" width="300">
+</p>
 
 
 ---
